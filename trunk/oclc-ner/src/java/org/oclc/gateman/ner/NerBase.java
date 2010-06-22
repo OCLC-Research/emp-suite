@@ -37,7 +37,7 @@ import LbjTagger.NEWord;
 import LbjTagger.ShapeClassifierManager;
 
 /** 
- * Bridge class between Gateman service and the UIUC NER Tagging App
+ * Bridge class between Gateman service and the UIUC NER Tagging and Training Apps
  * @author Devon Smith
  * @date 2009-02-16
  *
@@ -83,6 +83,7 @@ public class NerBase {
 	protected NETaggerLevel1 tagger1;
 	protected NETaggerLevel2 tagger2;
 
+	public static final String ROOTDIR_KEY = "oclc.ner.rootdir";
 	public static final String TRAINER_KEY = "uiuc.ner.trainer";
 	public static final String FORCE_SENTENCE_KEY = "uiuc.ner.parameter.forceSentenceOnLineBreak";
 
@@ -97,6 +98,7 @@ public class NerBase {
 		defaultConfiguration.put("shapeClassifier", "/Data/Models/shapeClassifier");
 		defaultConfiguration.put("shapeClassifierType", "resource");
 		defaultConfiguration.put("modelType", "resource");
+		defaultConfiguration.put(ROOTDIR_KEY, ".");
 	}
 
 	protected boolean isConfigurationComplete(Map<String,String> config) {
@@ -112,14 +114,19 @@ public class NerBase {
 
 		// Make sure we can get the configuration file
 		String location = config.get("configLocation");
+		File locationFile = new File(config.get(ROOTDIR_KEY), location);
 		String type = config.get("configLocationType");
 		if ( type.equals("resource") ) {
-			// System.err.println(location);
 			configReader = new BufferedReader(getResource(location));
 		}
 		else if ( type.equals("file") ) {
-			try { configReader = new BufferedReader( new FileReader(location)); }
-			catch (FileNotFoundException e) { return false; }
+			try {
+				configReader = new BufferedReader(new FileReader(locationFile));
+			}
+			catch (FileNotFoundException e) {
+				System.err.println("Can't open configuration: " + locationFile);
+ 				return false;
+			}
 		}
 
 		return true;
@@ -163,9 +170,6 @@ public class NerBase {
 		if ( config.containsKey(FORCE_SENTENCE_KEY) ) {
 			Parameters.forceNewSentenceOnLineBreaks = Boolean.parseBoolean(config.get(FORCE_SENTENCE_KEY));
 		}
-//		if ( config.containsKey("uiuc.ner.parameter.forceSentenceOnLineBreak") ) {
-//			Parameters.forceNewSentenceOnLineBreaks = Boolean.parseBoolean(config.get("uiuc.ner.parameter.forceSentenceOnLineBreak"));
-//		}
 
 		String cluster = config.get("brownClusters");
 		String type = config.get("brownClustersType");
@@ -195,7 +199,7 @@ public class NerBase {
 				ShapeClassifierManager.load(getResourceAsStream(shape));
 			}
 			else if ( type.equals("file") ) {
-				ShapeClassifierManager.load(new File(shape));
+				ShapeClassifierManager.load(new File( config.get(ROOTDIR_KEY), shape));
 			}
 		}
 

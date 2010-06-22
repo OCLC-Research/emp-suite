@@ -16,9 +16,7 @@ import org.oclc.gateman.ner.Tagger;
 import org.oclc.gateman.logging.LogFormatter;
 
 /**
- * Base resource class that supports common behaviours or attributes shared by
- * all resources.
- * 
+ * Command line tool for tagging named entities in text.
  */
 public class CmdLineTagger {
 
