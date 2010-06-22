@@ -19,7 +19,7 @@ import LbjTagger.Gazzetteers;
 import LbjTagger.ShapeClassifierManager;
 
 /** 
- * Bridge class between Gateman service and the UIUC NER Tagging App
+ * Bridge class between Gateman service and the UIUC NER Trainer App
  * @author Devon Smith
  * @date 2010-01-07
  */

@@ -16,17 +16,13 @@ import org.oclc.gateman.ner.Trainer;
 import org.oclc.gateman.logging.LogFormatter;
 
 /**
- * Base resource class that supports common behaviours or attributes shared by
- * all resources.
- * 
+ * Command line tool for training NER models, layered over UIUC NER code.
  */
 public class CmdLineTrainer {
 
 	private static Logger logger;
 
-	private static File trainingPropFile = new File("training.prop");
-
-	private static String usage = "Usage: org.oclc.gateman.CmdLineTrainer file-format config-file training-file testing-file\n\tfile-format: -c or -r\n\tforce-sentence: true to make newlines force a new sentence";
+	private static String usage = "Usage: org.oclc.gateman.CmdLineTrainer file-format properties-file training-file testing-file\n\tfile-format: -c or -r";
 	public static void main(String[] args) throws IOException, FileNotFoundException {
 		LogManager lm = LogManager.getLogManager();
 		lm.readConfiguration(ClassLoader.getSystemClassLoader().getSystemResourceAsStream("properties/cmdline.logging.properties"));
@@ -39,24 +35,30 @@ public class CmdLineTrainer {
 			usage(true);
 		}
 
-		//File configProps = new File(inputDir, taggerPropFile.toString());
-		File configProps = new File(trainingPropFile.toString());
+		File configProps = new File(args[1]);
 		Map<String,String> configMap = null;
-		if ( configProps.canRead() ) {
+		if ( configProps.isFile() && configProps.canRead() ) {
 			configMap = loadConfiguration(configProps);
+			configMap.put(Trainer.ROOTDIR_KEY, configProps.getParentFile().getParent());
 		}
-else {
-System.err.println("Error reading configuration");
+		else {
+			logger.severe("Can't read training properties file. Located at: \"" + configProps.toString() + "\"");
+			System.exit(1);
 		}
 
-		File config = new File(args[1]);
 		File training = new File(args[2]);
 		File testing = new File(args[3]);
-		if ( ! (config.isFile() && config.canRead() && training.isFile() && training.canRead() && testing.isFile() && testing.canRead())) {
-			usage(true);
+
+		if ( ! (training.isFile() && training.canRead()) ) {
+			logger.severe("Error reading training gold file: \"" + training.toString() + "\"");
+			System.exit(1);
 		}
 
-		//Trainer trainer = Trainer.getInstance(config.toString());
+		if ( ! (testing.isFile() && testing.canRead()) ) {
+			logger.severe("Error reading testing file: \"" + testing.toString() + "\"");
+			System.exit(1);
+		}
+
 		Trainer trainer = Trainer.getInstance(configMap);
 		trainer.train(training.toString(), testing.toString(), args[0]);
 	}
