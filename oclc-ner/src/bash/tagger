@@ -1,14 +1,16 @@
 #!/bin/bash
-# Begin make-install
+# Begin tagger
 ##############
 #$# creator : Devon Smith
 #%# email: smithde@oclc.org
-#$# created : 2010-06-18
-#$# title : make-install
-#$# description : Make & install JARs into working directory lib
+#$# created : 2010-06-22
+#$# title : tagger
+#$# description : Command line tagger demo 
 ########## Define a usage function 
 function usage {
-    echo "Usage: $this"
+    echo "Usage: $this [ format ]"
+    echo -e "\t default format = text/x-ner-markup"
+    echo -e "\t valid format options = text/x-ner-entities, text/html, application/xml"
     if [ "$1" = "exit" ]; then exit; fi
 }
 ########## Set to "false" to turn verbose off
@@ -16,6 +18,7 @@ function echo_stdout { echo "$@"; }
 function echo_stderr { echo "$@" >& 2; }
 # Set verbose to 'echo_stderr' or 'echo_stdout' to see output trace info
 verbose=false
+verbose=echo_stdout
 $verbose Verbose output on ${verbose##*_}
 
 ########## Setup some common paths
@@ -35,49 +38,31 @@ $verbose Time: $today $now
 ##########
 if [ "$1" = "-h" ]; then usage 'exit' ; fi
 ##########
+JAVA=$(which java)
 
-lbjdir=LbjNerTagger1.11.release
-zipfile=LBJNERTagger1.2.zip
-libdir=$(dirname $here)/lib
-patchfile=LbjNerTagger-1.11_oclc.patch
-
-jarname=uiuc.ner.jar
-modeljar=uiuc.ner.model.jar
-
-if [ ! -f "$zipfile" ]
+format="text/x-ner-markup"
+if [ "$1" != "" ]
 then
-	echo "UIUC NER not found: '$zipfile'"
-	exit
+	format="$1"
 fi
 
-unzip $zipfile
+moduledir=$(dirname $(dirname $here))
+$verbose Module Dir: $moduledir
 
-if [ ! -d "$lbjdir" ]
-then
-	echo "Couldn't find source directory: $lbjdir"
-	exit
-fi
+libdir=$(dirname $moduledir)/lib
+$verbose Library Dir: $libdir
 
-patch -b -p0 < $patchfile
+jars=(oclc.ner.jar uiuc.ner.jar uiuc.ner.model.jar LBJ2.jar LBJ2Library.jar)
+for jar in ${jars[*]}; do CP=${CP:+$CP:}$libdir/$jar; done
 
-cd $lbjdir
+CLASS=org.oclc.gateman.CmdLineTagger
+# Usage: org.oclc.gateman.CmdLineTagger input-dir output-dir [ format ]
 
-# Copy the LBJ jars into the emp-suite libdir
-cp LBJ2.jar $libdir; chmod 444 $libdir/LBJ2.jar
-cp LBJ2Library.jar $libdir; chmod 444 $libdir/LBJ2Library.jar
+input_dir=input
+output_dir=output
 
-# Create the UIUC NER model jar in the emp-suite libdir
-jar cf $libdir/$modeljar Config Data
-
-# Compile the the UIUC NER classes
-./cleanCompileProject
-
-cd bin
-# Create the UIUC NER jar in the emp-suite libdir
-jar cf $libdir/$jarname  *
-
-echo '... Done'
+$JAVA -Xmx2000m -cp $CP $CLASS $input_dir $output_dir $format
 
 ############
-# End make-install
+# End tagger
 # vim:ts=4:indentexpr=

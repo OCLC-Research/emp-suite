@@ -1,0 +1,81 @@
+#!/bin/bash
+# Begin make-deploy
+##############
+#$# creator : Devon Smith
+#%# email: smithde@oclc.org
+#$# created : 2010-06-18
+#$# title : make-deploy
+#$# description : Make & deploy JARs into working directory lib
+########## Define a usage function 
+function usage {
+    echo "Usage: $this"
+    if [ "$1" = "exit" ]; then exit; fi
+}
+########## Set to "false" to turn verbose off
+function echo_stdout { echo "$@"; }
+function echo_stderr { echo "$@" >& 2; }
+# Set verbose to 'echo_stderr' or 'echo_stdout' to see output trace info
+verbose=false
+$verbose Verbose output on ${verbose##*_}
+
+########## Setup some common paths
+# The absolute, canonical ( no ".." ) path to this script
+canonical=$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)/$(basename -- "$0")")
+# Just the filename of this script
+this=$(basename $canonical)
+$verbose This: $this
+# The directory this script is in
+here=$(dirname $canonical)
+$verbose Here: $here
+
+########## When the script is being executed
+today=$(date +%F)
+now=$(date +%H:%M:%S)
+$verbose Time: $today $now
+##########
+if [ "$1" = "-h" ]; then usage 'exit' ; fi
+##########
+JAVAC=$(which javac)
+JAR=$(which jar)
+
+target_jar=oclc.ner.jar
+
+moduledir=$here
+$verbose Module Dir: $moduledir
+
+configdir=$moduledir/src/config
+$verbose Config Dir: $configdir
+
+libdir=$(dirname $moduledir)/lib
+$verbose Library Dir: $libdir
+jars=(uiuc.ner.jar LBJ2.jar LBJ2Library.jar)
+
+restlet_libdir=$libdir/restlet-1.0.11/lib
+$verbose Restlet Library Dir: $restlet_libdir
+restlet_jars=(org.restlet.jar com.noelios.restlet.jar)
+
+if [ ! -d $libdir ]; then echo "EMP-Suite JARs not found: '$libdir'"; exit; fi
+if [ ! -d $restlet_libdir ]; then echo "Restlet JARs not found: '$restlet_libdir'"; exit; fi
+
+DEST=$moduledir/target/classes
+mkdir -p $DEST
+
+CP=$DEST
+for jar in ${jars[*]}; do CP=${CP:+$CP:}$libdir/$jar; done
+for jar in ${restlet_jars[*]}; do CP=${CP:+$CP:}$restlet_libdir/$jar; done
+$verbose Classpath: $CP
+
+$JAVAC -cp $CP -d $DEST $here/src/java/org/oclc/gateman/logging/*.java
+$JAVAC -cp $CP -d $DEST $here/src/java/org/oclc/gateman/storage/*.java
+$JAVAC -cp $CP -d $DEST $here/src/java/org/oclc/gateman/ner/*.java
+$JAVAC -cp $CP -d $DEST $here/src/java/org/oclc/gateman/*.java
+
+mkdir -p $DEST/properties
+cp $here/src/config/cmdline.logging.properties $DEST/properties
+
+cd $DEST
+$JAR cf $libdir/$target_jar *
+
+############
+# End make-deploy
+# vim:ts=4:indentexpr=

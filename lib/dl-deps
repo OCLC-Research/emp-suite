@@ -1,0 +1,53 @@
+#!/bin/bash
+# Begin dl-deps
+##############
+#$# creator : Devon Smith
+#%# email: smithde@oclc.org
+#$# created : 2010-06-22
+#$# title : dl-deps
+#$# description : Download dependencies
+########## Define a usage function 
+function usage {
+    echo "Usage: $this"
+    if [ "$1" = "exit" ]; then exit; fi
+}
+########## Set to "false" to turn verbose off
+function echo_stdout { echo "$@"; }
+function echo_stderr { echo "$@" >& 2; }
+# Set verbose to 'echo_stderr' or 'echo_stdout' to see output trace info
+verbose=false
+$verbose Verbose output on ${verbose##*_}
+
+########## Setup some common paths
+# The absolute, canonical ( no ".." ) path to this script
+canonical=$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)/$(basename -- "$0")")
+# Just the filename of this script
+this=$(basename $canonical)
+$verbose This: $this
+# The directory this script is in
+here=$(dirname $canonical)
+$verbose Here: $here
+
+########## When the script is being executed
+today=$(date +%F)
+now=$(date +%H:%M:%S)
+$verbose Time: $today $now
+##########
+if [ "$1" = "-h" ]; then usage 'exit' ; fi
+##########
+
+RESTLET_ZIP=restlet-1.0.11.zip
+RESTLET_URL=http://www.restlet.org/downloads/1.0/$RESTLET_ZIP
+
+wget $RESTLET_URL
+unzip $RESTLET_ZIP
+
+SIMPLE_TGZ=simple-core-3.1.3.tar.gz
+SIMPLE_URL=http://downloads.sourceforge.net/project/simpleweb/simpleweb/3.1.3/$SIMPLE_TGZ
+
+wget $SIMPLE_URL
+tar zxf $SIMPLE_TGZ
+
+############
+# End dl-deps
+# vim:ts=4:indentexpr=

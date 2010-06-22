@@ -1,0 +1,284 @@
+ORG	February
+ORG	House
+ORG	Representative Turner
+ORG	House Wayne Padget
+ORG	Representative Flowers
+ORG	House
+ORG	ROLL CALL
+PER	John Bradley
+PER	Richard Bradley
+PER	Dunn
+PER	Molaro
+PER	Watson
+ORG	Younge
+ORG	COMMITTEE
+ORG	Representative Lyons
+ORG	Representative McCarthy
+ORG	Committee
+ORG	Gaming
+ORG	February
+ORG	Representative Boland
+ORG	Representative Molaro
+ORG	Committee
+ORG	Gaming
+ORG	February
+ORG	Representative
+PER	Chapa LaVia
+ORG	Representative
+PER	Richard Bradley
+ORG	Committee
+ORG	Gaming
+ORG	February
+ORG	Representative Yarbrough
+ORG	Representative Froehlich
+ORG	Committee
+ORG	Environmental Health
+ORG	February
+ORG	Representative Ramey
+ORG	Representative Sacia
+ORG	Committee
+ORG	Environmental Health
+ORG	February
+ORG	Representative Sullivan
+ORG	Representative Eddy
+ORG	Committee
+ORG	February
+ORG	COMMITTEE
+ORG	Representative Feigenholtz
+ORG	Representative Howard
+ORG	Committee
+ORG	Human Services
+ORG	February
+ORG	Representative Reitz
+ORG	Representative Phelps
+ORG	Committee
+ORG	Elementary & Secondary Education
+ORG	February
+ORG	Representative
+PER	William Davis
+ORG	Representative Joyce
+ORG	Committee
+ORG	Elementary & Secondary Education
+ORG	February
+ORG	Representative Osmond
+ORG	Representative Ramey
+ORG	Committee
+ORG	Drivers Education & Safety
+ORG	February
+ORG	Representative Munson
+ORG	Representative Brady
+ORG	Committee
+ORG	Drivers Education & Safety
+ORG	February
+ORG	Representative Mendoza
+ORG	Representative
+PER	Richard Bradley
+ORG	Committee
+ORG	February
+ORG	Representative Harris
+ORG	Representative Molaro
+ORG	Committee
+ORG	February
+ORG	Representative Leitch
+ORG	Representative Brady
+ORG	Committee
+ORG	February
+ORG	Representative Soto
+PER	Chairperson
+ORG	Committee
+ORG	Approp-Elementary & Secondary Education
+ORG	February
+ORG	House
+ORG	Y Soto
+LOC	D
+PER	Chairperson
+PER	Davis
+PER	William
+LOC	D
+ORG	Vice-Chairperson
+ORG	N
+ORG	R
+ORG	Republican Spokesperson
+ORG	Y Acevedo
+LOC	D
+ORG	Y Arroyo
+LOC	D
+PER	N Cole
+ORG	R
+ORG	Y Coulson
+ORG	R
+PER	N Eddy
+ORG	R
+ORG	Ford
+LOC	D
+PER	N Fortner
+ORG	R
+ORG	Y Golar
+LOC	D
+PER	Hernandez
+LOC	D
+ORG	Y Howard
+LOC	D
+ORG	Y
+LOC	D
+PER	N Mitchell
+PER	Jerry
+ORG	R
+ORG	N
+ORG	R
+ORG	Y Ryg
+LOC	D
+PER	Schock
+ORG	R
+PER	N Schmitz
+ORG	R
+ORG	Y
+LOC	D
+ORG	Y Younge
+LOC	D
+ORG	Representative Froehlich
+ORG	Representative Feigenholtz
+ORG	Representative Soto
+ORG	Representative Ryg
+ORG	Committee
+PER	Madigan:
+LOC	WHEREAS
+PER	FutureGen
+ORG	United States'
+LOC	WHEREAS
+PER	FutureGen
+LOC	WHEREAS
+PER	FutureGen
+LOC	United States
+ORG	United States'
+LOC	WHEREAS
+PER	FutureGen
+PER	FutureGen
+LOC	WHEREAS
+ORG	FutureGen Alliance
+ORG	Alliance
+ORG	Alliance
+ORG	Alliance
+LOC	WHEREAS
+LOC	Illinois
+LOC	WHEREAS
+LOC	Illinois
+LOC	United States
+ORG	Office of Coal Development
+ORG	Illinois Clean Coal Institute
+LOC	WHEREAS
+LOC	Illinois
+LOC	Illinois
+LOC	U.S.
+LOC	WHEREAS
+LOC	Midwest
+LOC	Illinois
+LOC	Chicago
+LOC	East St. Louis
+LOC	Illinois
+LOC	WHEREAS
+PER	FutureGen
+LOC	Illinois
+LOC	WHEREAS
+ORG	U.S. Department of Energy
+ORG	FutureGen Alliance
+LOC	WHEREAS
+PER	FutureGen
+PER	FutureGen
+ORG	U.S. Department of Energy
+PER	FutureGen
+LOC	WHEREAS
+PER	FutureGen
+LOC	WHEREAS
+ORG	U.S. Department of Energy
+PER	FutureGen
+ORG	FutureGen Alliance
+LOC	Illinois: Mattoon
+LOC	Tuscola
+PER	FutureGen
+LOC	U.S.
+LOC	WHEREAS
+LOC	Mattoon
+LOC	Tuscola
+LOC	Illinois
+LOC	Chicago
+LOC	St. Louis
+LOC	Indianapolis
+LOC	United States
+LOC	Mattoon
+LOC	Tuscola
+PER	FutureGen
+LOC	WHEREAS
+ORG	University of Illinois
+LOC	Urbana-Cle
+LOC	WHEREAS
+ORG	U.S. Department of Energy
+ORG	Alliance
+MISC	Environmental Impact Statement
+ORG	Congress
+LOC	WHEREAS
+MISC	Environmental Impact Statement
+ORG	U.S. Department of Energy
+ORG	U.S. Department of Energy
+MISC	Environmental Impact Statement
+LOC	Mattoon
+LOC	Tuscola
+LOC	WHEREAS
+ORG	Illinois General Assembly
+ORG	Senate Bill
+ORG	Clean Coal FutureGen
+ORG	Illinois Act for the
+ORG	FutureGen Alliance
+ORG	FutureGen Project
+LOC	Illinois
+LOC	WHEREAS
+LOC	Illinois
+LOC	Best
+LOC	WHEREAS
+LOC	Illinois
+ORG	Alliance
+ORG	Edwardsville
+ORG	U.S. Department of Energy
+LOC	WHEREAS
+ORG	U.S. Department of Energy
+LOC	WHEREAS
+ORG	U.S. Department of Energy
+LOC	WHEREAS
+ORG	Alliance Board of Directors
+LOC	Washington D.C.
+ORG	U.S. Department of Energy
+ORG	Alliance
+LOC	WHEREAS
+LOC	Washington D.C.
+ORG	Alliance
+LOC	Mattoon
+ORG	FutureGen
+ORG	U.S. Department of Energy
+MISC	FutureGen
+LOC	WHEREAS
+ORG	Alliance
+ORG	U.S. Department of Energy
+LOC	WHEREAS
+ORG	U.S. Department of Energy
+PER	FutureGen
+LOC	WHEREAS
+LOC	Illinois
+ORG	FutureGen
+ORG	FutureGen Program
+ORG	U.S. Department of Energy
+ORG	Alliance
+LOC	WHEREAS
+ORG	Alliance
+ORG	U.S. Department of Energy
+LOC	Mattoon
+LOC	WHEREAS
+ORG	Alliance
+LOC	ILLINOIS
+ORG	U.S. Congress
+ORG	U.S. Department of Energy
+ORG	FutureGen
+LOC	Central Illinois
+ORG	U.S. Senate
+ORG	U.S. House of Representatives
+ORG	Illinois Congressional
+ORG	U.S. Department of Energy
