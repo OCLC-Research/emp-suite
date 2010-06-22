@@ -11,7 +11,7 @@ emp-suite/
                 --------/ wget 1.12 - http://www.gnu.org/software/wget/wget.html
                 --------/ unzip 6.0 - http://www.info-zip.org/
                 --------/ tar 1.23 - http://www.gnu.org/software/tar/tar.html
-                --------/ Bash 4.1 - http://www.gnu.org/software/wget/wget.html
+                --------/ Bash 4.1 - http://www.gnu.org/software/bash/bash.html
         --------/ Usage
                 --------/ Execute the dl-deps script.
                 --------/ It will download certain project dependecies and deploy them into the lib directory.
@@ -53,7 +53,7 @@ emp-suite/
         --------/ Requirements
                 --------/ Java 1.6 - http://java.sun.com/
                 --------/ Patch 2.6.1 - http://www.gnu.org/software/patch/patch.html
-                --------/ Bash 4.1 - http://www.gnu.org/software/wget/wget.html
+                --------/ Bash 4.1 - http://www.gnu.org/software/bash/bash.html
         --------/ Compilation
                 --------/ Download the UIUC CCG Named Entity Tagger from http://l2r.cs.uiuc.edu/~cogcomp/asoftware.php?skey=FLBJNE
                         --------/ ( As of 2010-06-18, the downloaded file is named LBJNERTagger1.2.zip, but actually contains version 1.11 )
@@ -67,7 +67,7 @@ emp-suite/
                 --------/ A web service layer and a batch command line layer over the UIUC NER library.
         --------/ Requirements
                 --------/ Java 1.6 - http://java.sun.com/
-                --------/ Bash 4.1 - http://www.gnu.org/software/wget/wget.html
+                --------/ Bash 4.1 - http://www.gnu.org/software/bash/bash.html
                 --------/ UIUC CCG Named Entity Tagger 1.11 - see uiuc-ner above
                 --------/ Restlet 1.0.11 - http://www.restlet.org/
                         --------/ Deployed by the emp-suite/lib/dl-deps script.
@@ -91,4 +91,41 @@ emp-suite/
                         --------/ There are four output format options: text/x-ner-markup, text/x-ner-entities, text/html, and application/xml
                         --------/ Under the output directory is a subdirectory for each format which provides examples. 
 
+--------/training
+        --------/ Description
+                --------/ Train custom Named Entity Recognition models.
+        --------/ Requirements
+                --------/ OCLC NER - see oclc-ner above
+                --------/ UIUC NER - see uiuc-ner above
+                --------/ Gold training data - see gold-forge above
+                --------/ Java 1.6 - http://java.sun.com/
+                --------/ Bash 4.1 - http://www.gnu.org/software/bash/bash.html
+        --------/ Configuration
+                --------/ train
+                        --------/ training_gold=$here/data/sample-gold.conll
+                                --------/ Pointer to the training-gold data.
+                        --------/ properties_file=$here/config/sample.prop
+                                --------/ Pointer to the OCLC NER configuration file.
+                --------/ config/sample.prop
+                        --------/ This file configures the OCLC NER layer.
+                        --------/ uiuc.ner.parameter.forceSentenceOnLineBreak = false;
+                                --------/ Force a line break in the training-gold data to be interpreted as a new sentence.
+                                --------/ Depending on your training-gold data and the data on which you intend to use the model, this can
+                                --------/ result in subtle differences in your model's performance. It's best to experiment with each value.
+                        --------/ configLocation = config/sample.config
+                                --------/ Pointer to the UIUC NER configuration file.
+                --------/ config/sample.config
+                        --------/ This file configures the UIUC NER layer.
+                        --------/ model/sample-model
+                                --------/ Pointer to the model files. Model files are this value, suffixed with '.level1' and '.level2'
+                        --------/ rounds	3
+                                --------/ Number of training rounds to execute. As more training-gold is used and more rounds are done,
+                                --------/ the time it takes to train a model increase. 30 rounds and 500k of training data can take
+                                --------/ several hours, but produces good results. 3 is the default here just for the sample.
+        --------/ Usage
+                --------/ Make a copy of the "skeleton" directory for each model you want to train.
+                --------/ e.g., cp -r skeleton model.one
+                --------/ To build the sample model, just execute the 'train' script from the model.one directory.
+                --------/ To build your own model, copy your training-gold data into the model.one/data directory
+                --------/ and make sure all the configuration settings above are set accordingly. Then execute the 'train' script.
 
