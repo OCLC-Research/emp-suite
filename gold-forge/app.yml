@@ -1,0 +1,55 @@
+setup:
+# edit: 0 = non-editing interface, 1 = editing interface
+  edit: 1
+# directory: location of files (w/ or w/o tagging) to be edited
+  directory: a/path/to/a/directory
+# external: what js & css files should be included ( ".js" and ".css" are assumed )
+  external:
+    js:
+      - app
+    css:
+      - app
+# static: regexp patterns that indicated which URL paths point to files to be served as-is, w/out processing (like files in data)
+  static:
+    - '^/css/'
+    - '^/js/'
+# index_template: template for the index page, lists the files in above directory to be tagged
+index_template: |
+  [% title = 'Tagging Training Data' %]
+  <html><head><title>[% title %]</title>
+  [% FOR css IN setup.external.css %]<link rel="stylesheet" type="text/css" href="/css/[% css %].css">[% END %]
+  [% IF setup.edit ==1 %][% FOR js IN setup.external.js %]<script type="text/javascript" src="/js/[% js %].js"></script>[% END %][% END %]
+  </head><body class='index' onload='load();'>
+  [% FOR l IN listing %]
+  <a class='listing' href="[% l %]">[% l %]</a><br/>
+  [% END %]
+  </body></html>
+# template: template for files in above directory
+template: |
+  [% title = 'Tagging Training Data' %]
+  <html><head><title>[% title %]</title>
+  [% FOR css IN setup.external.css %]<link rel="stylesheet" type="text/css" href="/css/[% css %].css">[% END %]
+  [% IF setup.edit ==1 %][% FOR js IN setup.external.js %]<script type="text/javascript" src="/js/[% js %].js"></script>[% END %][% END %]
+  </head><body onload='load();'>
+  <!-- The legend is laid out to separate the delete from the other actions, to decrease likelihood of accidentally pressing it, since there is no undo -->
+  <div id='legend'><table border='0' cellspacing='0' cellpadding='0'>
+  <tr><td onmousedown='conll_tag("PER");'>&bull; <span class='PER'>Person</span></td>
+      <td onmousedown='conll_tag("LOC");'>&bull; <span class='LOC'>Location</span></td>
+      <td onmousedown='conll_tag("ORG");'>&bull; <span class='ORG'>Organization</span></td>
+      <td onmousedown='conll_tag("MISC");'>&bull; <span class='MISC'>Miscellaneous</span></td>
+  </tr>
+  [% IF setup.edit == 1 %]
+  <tr><td onmousedown='switch_toCONLL();'>&bull; As CONLL</td>
+      <td onmousedown='switch_toHTML();'>&bull; As HTML</td>
+      <td/>
+      <td/>
+  </tr>
+  <tr><td onmousedown='conll_tag("CLEAR");'>&bull; <span class='CLEAR'>Clear</span></td>
+      <td/><td/>
+      <td onmousedown='delete_selection();'>&bull; Delete</td>
+  </tr>
+  [% END %]
+  </table></div>
+  <div id='conllview'></div>
+  <div id='htmlview' onkeypress='key_dispatch(event);'>[% FOR line IN content; line; END %]</div>
+  </body></html>

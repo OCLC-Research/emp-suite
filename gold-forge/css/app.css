@@ -1,0 +1,48 @@
+
+body {
+	background-color: black;
+}
+body.index {
+	background-color: white;
+}
+a.listing {
+	color: blue;
+}
+
+/* The colors used for each CONLL tag */
+span.PER { color: red; }
+span.LOC { color: green; }
+span.ORG { color: purple; }
+span.MISC { color: blue; }
+span.CLEAR { color: black; }
+
+div#htmlview, div#conllview {
+	/* monospace font family helps with selecting an exact sequence of chars */
+	font-family: monospace;
+
+	background-color: white;
+	padding: 5pt 5pt 5pt 5pt;
+	margin-left: 10pt;
+	margin-right: 10pt;
+	margin-bottom: 125pt;
+	border: double medium black;
+}
+div#conllview {
+	display: none;
+}
+#legend {
+	position: fixed;
+	width: 65%;
+	left: 20%;
+	bottom: 5%;
+	z-index: 1;
+	background-color: #cdcdcd;
+	border: double medium black;
+	font-size: medium;
+	padding-left: 1em;
+}
+#legend td {
+	padding: 2pt 12pt 2pt 3pt;
+}
+#legend tr {
+}
