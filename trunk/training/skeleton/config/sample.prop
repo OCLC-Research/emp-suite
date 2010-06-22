@@ -1,0 +1,22 @@
+
+# Set up for training instead of tagging
+uiuc.ner.trainer = true
+
+uiuc.ner.parameter.forceSentenceOnLineBreak = false;
+
+# Configuration for UIUC NER Library
+configLocation = config/sample.config
+configLocationType = file
+
+# Model location is specified in the UIUC config file
+modelType = file
+
+shapeClassifier = model/shapeClassifier
+shapeClassifierType = file
+
+brownClusters = /Data/BrownHierarchicalWordClusters/brownBllipClusters
+brownClustersType = resource
+
+gazzetteerDirectory = /Data/KnownLists
+gazzetteerDirectoryType = resource
+
