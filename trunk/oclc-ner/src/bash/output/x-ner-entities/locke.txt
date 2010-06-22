@@ -1,0 +1,18 @@
+PER	John Locke
+MISC	English
+PER	Locke
+MISC	British
+PER	Voltaire
+PER	Rousseau
+MISC	Scottish
+MISC	American
+MISC	American
+LOC	Independence
+PER	Locke
+PER	David Hume
+PER	Jean-Jacques Rousseau
+PER	Immanuel Kant
+PER	Locke
+MISC	Cartesian
+MISC	Christian
+PER	Locke

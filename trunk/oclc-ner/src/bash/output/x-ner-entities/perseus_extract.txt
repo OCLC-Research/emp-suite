@@ -1,0 +1,55 @@
+ORG	Senate
+LOC	Rome
+PER	Mount.2 Even
+ORG	Senate
+ORG	Senate
+PER	Marcius Coriolanus
+LOC	Volsci
+PER	Tiberius Gracchus
+LOC	Capitol
+PER	Gracchus
+PER	Cornelius Sulla
+PER	Sulla
+PER	Sulla
+PER	Sulla
+PER	Gaius Cæsar
+LOC	Gaul
+ORG	Senate
+ORG	Senate
+PER	Pompey
+LOC	Italy
+PER	Pompey
+LOC	Gaul
+PER	Pompey
+MISC	Roman
+LOC	Thessaly
+LOC	Egypt
+PER	Pompey
+MISC	Egyptians
+PER	Cæsar
+LOC	Egypt
+LOC	Rome
+PER	Sulla
+ORG	Brutus
+ORG	Cassius
+ORG	Senate
+LOC	Massacres
+MISC	Roman
+MISC	Romans
+PER	Augustus
+PER	Cæsar
+PER	Cæsar
+MISC	Roman
+MISC	Egyptian
+LOC	Egypt
+PER	Cleopatra
+PER	Antony
+PER	Sempronius Gracchus
+PER	Cornelius Sulla
+PER	Cæsar
+MISC	Roman
+LOC	Actium
+PER	Octavius Cæsar
+PER	Antony
+PER	Cleopatra
+MISC	Egyptian

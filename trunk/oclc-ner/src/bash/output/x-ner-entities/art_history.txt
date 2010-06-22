@@ -1,0 +1,59 @@
+MISC	British
+PER	Arthur Devis
+LOC	London
+ORG	Reynolds
+ORG	Gainsborough
+PER	Devis
+LOC	London
+PER	Devis
+PER	Devis
+PER	Arthur Holdsworth
+LOC	Dartmouth Castle
+LOC	River Dart
+PER	Holdsworth
+PER	Holdsworth
+PER	Thomas Taylor
+PER	Gardner
+ORG	Art History Survey Text
+LOC	Neolithic Revolution
+LOC	Mesopotamia
+MISC	Greek
+LOC	Tigris
+LOC	Euphrates
+LOC	Mesopotamia
+ORG	Fertile Crescent
+LOC	Turkey
+LOC	Syria
+LOC	Iraq
+LOC	Iran
+LOC	Zagros Mountain
+LOC	Garden
+LOC	Eden
+MISC	Judaism
+MISC	Islam
+LOC	Near East
+MISC	Mesopotamians
+LOC	Europe
+MISC	Assyrians
+MISC	Mesopotamian
+PER	Austen Henry Layard
+MISC	Near Eastern
+ORG	British Museum
+MISC	North American
+MISC	Near Eastern
+MISC	Mesopotamian
+PER	Leonard Woolley
+LOC	Royal Cemetery
+LOC	Ur
+LOC	Mesopotamia
+MISC	Egyptian
+MISC	Tutankhamen
+LOC	Ur
+LOC	Europe
+PER	Agatha Christie
+MISC	British
+LOC	Ur
+LOC	Mesopotamia
+LOC	Iraq
+LOC	Ur
+MISC	Sumerians

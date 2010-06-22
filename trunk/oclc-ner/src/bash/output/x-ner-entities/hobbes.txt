@@ -1,0 +1,4 @@
+PER	Thomas Hobbes
+MISC	English
+MISC	Western
+PER	Hobbes

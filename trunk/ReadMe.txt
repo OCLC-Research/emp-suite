@@ -4,13 +4,30 @@ Extracting Metadata for Preservation - Software Suite
 ======== Contents ========
 
 emp-suite/
+--------/lib
+        --------/ Description
+                --------/ Where dependency and deliverable JARs/libraries are put.
+        --------/ Requirements
+                --------/ wget 1.12 - http://www.gnu.org/software/wget/wget.html
+                --------/ unzip 6.0 - http://www.info-zip.org/
+                --------/ tar 1.23 - http://www.gnu.org/software/tar/tar.html
+                --------/ Bash 4.1 - http://www.gnu.org/software/wget/wget.html
+        --------/ Usage
+                --------/ Execute the dl-deps script.
+                --------/ It will download certain project dependecies and deploy them into the lib directory.
+                        --------/ Restlet 1.0.11
+                        --------/ Simple Framework 3.1.3
+
 --------/gold-forge
         --------/ Description
                 --------/ A web-app for tagging text in the CONLL bracketed format. 
         --------/ Requirements
                 --------/ Perl 5.10
-                --------/ Plackup http://search.cpan.org/dist/Plack/
-                --------/ Web browser (Opera is best)
+                --------/ Plackup - http://search.cpan.org/dist/Plack/
+                --------/ Web browser
+                        --------/ Opera 10.10 - best results
+                        --------/ Firefox 3.6.3
+                        --------/ Internet Explorer 8
         --------/ Configuration
                 --------/ Open app.yml, change the directory option under setup.
                 --------/ Point it to a directory on your system that contains files you want to tag.
@@ -32,15 +49,46 @@ emp-suite/
 --------/uiuc-ner
         --------/ Description
                 --------/ Named Entity Recognizing library developed by UIUC's Cognitive Computation Group.
+                --------/ ( Must be manually downloaded and compiled. ) 
         --------/ Requirements
                 --------/ Java 1.6 - http://java.sun.com/
                 --------/ Patch 2.6.1 - http://www.gnu.org/software/patch/patch.html
-                --------/ Bash
+                --------/ Bash 4.1 - http://www.gnu.org/software/wget/wget.html
         --------/ Compilation
                 --------/ Download the UIUC CCG Named Entity Tagger from http://l2r.cs.uiuc.edu/~cogcomp/asoftware.php?skey=FLBJNE
                         --------/ ( As of 2010-06-18, the downloaded file is named LBJNERTagger1.2.zip, but actually contains version 1.11 )
                 --------/ Move the downloaded zip file into the uiuc-ner directory.
-                --------/ Execute the 'make-install' script.
-                        --------/ This script will unzip the file, patch the source, then build and copy JAR files into the emp-suite/lib directory.
+                --------/ Execute the 'make-deploy' script.
+                        --------/ This script will unzip the file, patch the source, compile the classes,
+                        --------/ then build and copy JAR files into the emp-suite/lib directory.
+
+--------/oclc-ner
+        --------/ Description
+                --------/ A web service layer and a batch command line layer over the UIUC NER library.
+        --------/ Requirements
+                --------/ Java 1.6 - http://java.sun.com/
+                --------/ Bash 4.1 - http://www.gnu.org/software/wget/wget.html
+                --------/ UIUC CCG Named Entity Tagger 1.11 - see uiuc-ner above
+                --------/ Restlet 1.0.11 - http://www.restlet.org/
+                        --------/ Deployed by the emp-suite/lib/dl-deps script.
+                --------/ Simple Framework 3.1.3 - http://www.simpleframework.org/
+                        --------/ Deployed by the emp-suite/lib/dl-deps script.
+        --------/ Compilation
+                --------/ Execute the 'make-deploy' script.
+                        --------/ This script compiles the classes, builds a JAR, and copies it into the emp-suite/lib directory.
+        --------/ Usage
+                --------/ In src/bash there are a few demonstration scripts.
+                --------/ ner.server
+                        --------/ This script starts an NER web service. It can take several minutes to fully initialize.
+                        --------/ It puts log information into logs/gateman.log.
+                --------/ demo.client
+                        --------/ This script will connect to the server started above and get a sample text tagged.
+                        --------/ It prints some logging info and the final result to stdout.
+                --------/ tagger
+                        --------/ This script will tag files in batch on the local disk. It does not need the server above to be running.
+                        --------/ (It also can take several minutes to initialize before tagging starts.)
+                        --------/ It will tag the sample texts in the input subdirectory, putting the results in the output subdirectory.
+                        --------/ There are four output format options: text/x-ner-markup, text/x-ner-entities, text/html, and application/xml
+                        --------/ Under the output directory is a subdirectory for each format which provides examples. 
 
 

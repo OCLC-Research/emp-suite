@@ -1,0 +1,24 @@
+
+# Where is the tagger config file located?
+configLocation = /Config/allFeaturesBigTrainingSet.config
+# Is the tagger config file a resource in the jar? Or a regular file? ( resource | file )
+configLocationType = resource
+
+# Is the model (defined in the config file) a resource or a file?
+modelType = resource
+
+# Where and what type is the brown clusters data?
+brownClusters = /Data/BrownHierarchicalWordClusters/brownBllipClusters
+brownClustersType = resource
+
+# Where and what type is the gazzetteer data?
+gazzetteerDirectory = /Data/KnownLists
+gazzetteerDirectoryType = resource
+
+# Where and what type is the shape classifier data?
+shapeClassifier = /Data/Models/shapeClassifier
+shapeClassifierType = resource
+
+# Should the parser force a new sentence whenever it scans a newline character?
+uiuc.ner.parameter.forceSentenceOnLineBreak = true
+

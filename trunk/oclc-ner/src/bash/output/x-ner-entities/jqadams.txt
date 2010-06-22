@@ -1,0 +1,26 @@
+PER	John Quincy Adams
+MISC	American
+LOC	United States
+ORG	Federalist
+MISC	Democratic-Republican
+MISC	Republican
+MISC	Anti-Masonic
+PER	Adams
+PER	John Adams
+PER	Abigail Adams
+PER	Quincy
+PER	Abigail
+PER	John Quincy
+PER	Quincy
+LOC	Massachusetts
+ORG	Monroe Doctrine
+ORG	Congress
+PER	Adams
+PER	Andrew Jackson
+PER	Adams
+LOC	U.S.
+LOC	Massachusetts
+ORG	House
+ORG	Slave Power
+PER	Abraham Lincoln
+MISC	American Civil War
