@@ -29,4 +29,18 @@ emp-suite/
                 --------/ Clicking on 'As HTML' will show the color-ized version of the tagging.
                 --------/ To save the CONLL tagged version, you must click on 'As CONLL' and then manually opy and paste the text into a file.
 
+--------/uiuc-ner
+        --------/ Description
+                --------/ Named Entity Recognizing library developed by UIUC's Cognitive Computation Group.
+        --------/ Requirements
+                --------/ Java 1.6 - http://java.sun.com/
+                --------/ Patch 2.6.1 - http://www.gnu.org/software/patch/patch.html
+                --------/ Bash
+        --------/ Compilation
+                --------/ Download the UIUC CCG Named Entity Tagger from http://l2r.cs.uiuc.edu/~cogcomp/asoftware.php?skey=FLBJNE
+                        --------/ ( As of 2010-06-18, the downloaded file is named LBJNERTagger1.2.zip, but actually contains version 1.11 )
+                --------/ Move the downloaded zip file into the uiuc-ner directory.
+                --------/ Execute the 'make-install' script.
+                        --------/ This script will unzip the file, patch the source, then build and copy JAR files into the emp-suite/lib directory.
+
 

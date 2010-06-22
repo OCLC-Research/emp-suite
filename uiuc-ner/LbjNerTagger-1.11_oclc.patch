@@ -1,0 +1,620 @@
+--- LbjNerTagger1.11.release/src/IO/InFile.java	2008-12-09 21:25:59.000000000 -0500
++++ LbjNerTagger1.11.oclc/src/IO/InFile.java	2010-02-18 13:18:14.000000000 -0500
+@@ -1,11 +1,14 @@
+ package IO;
+ 
+ import java.io.BufferedReader;
++import java.io.File;
+ import java.io.FileReader;
++import java.io.Reader;
++import java.io.InputStream;
++import java.io.InputStreamReader;
+ import java.util.StringTokenizer;
+ import java.util.Vector;
+ 
+-
+ /**
+   * This project was started by Nicholas Rizzolo (rizzolo@uiuc.edu) . 
+   * Most of design, development, modeling and
+@@ -24,11 +27,42 @@
+ 	public static boolean pruneStopSymbols=false;
+ 	public BufferedReader  in = null;
+ 	public static String stopSymbols="@";
++
++	public InFile (String filename) {
++		try { // System.err.println("InFile: constructor(String): file = " + filename);
++			in = new BufferedReader(new FileReader(filename));
++		}
++		catch(Exception e){
++			e.printStackTrace();
++			System.exit(0);
++		}
++	}
++	public InFile (File file){
++		try { // System.err.println("InFile: constructor(File): file = " + file.getName());
++			in = new BufferedReader(new FileReader(file));
++		}
++		catch(Exception e){
++			e.printStackTrace();
++			System.exit(0);
++		}
++	}
++
++	public InFile (InputStream stream) {
++		try { // System.err.println("InFile: constructor(InputStream): stream = " + stream);
++			in = new BufferedReader(new InputStreamReader(stream));
++		}
++		catch(Exception e){
++			e.printStackTrace();
++			System.exit(0);
++		}
++
++	}
+ 	
+-	public InFile(String filename){
+-		try{
+-			in= new BufferedReader(new FileReader(filename));
+-		}catch(Exception e){
++	public InFile (Reader reader) {
++		try { // System.err.println("InFile: constructor(Reader): reader = " + reader);
++			in = new BufferedReader(reader);
++		}
++		catch(Exception e){
+ 			e.printStackTrace();
+ 			System.exit(0);
+ 		}
+--- LbjNerTagger1.11.release/src/IO/ReaderUtil.java	2010-06-18 16:28:50.000000000 -0400
++++ LbjNerTagger1.11.oclc/src/IO/ReaderUtil.java	2009-11-06 13:50:54.000000000 -0500
+@@ -0,0 +1,29 @@
++package IO;
++
++import java.io.File;
++import java.io.FileReader;
++import java.io.FileNotFoundException;
++import java.io.InputStreamReader;
++import java.io.Reader;
++
++/** 
++ * Stub Class Documentation
++ * @author Devon Smith
++ * @date 2009-11-06
++ *
++ */
++public class ReaderUtil {
++	private ReaderUtil() { }
++	public static Reader getReader(String source) throws FileNotFoundException {
++		Reader r = null;
++		if ( null != source.getClass().getResourceAsStream(source)) {
++			r = new InputStreamReader(source.getClass().getResourceAsStream(source));
++		}
++		else if ( new File(source).canRead() ) {
++			r = new FileReader(source);
++		}
++		return r;
++	}		
++}
++
++//vim:ts=4:indentexpr=
+--- LbjNerTagger1.11.release/src/LbjTagger/LearningCurve.java	2008-12-11 14:21:55.000000000 -0500
++++ LbjNerTagger1.11.oclc/src/LbjTagger/LearningCurve.java	2010-02-18 12:55:36.000000000 -0500
+@@ -5,9 +5,7 @@
+ import LBJ2.classify.TestDiscrete;
+ import LBJ2.parse.*;
+ 
+-
+-
+-
++import IO.InFile;
+ 
+ /**
+   * This project was started by Nicholas Rizzolo (rizzolo@uiuc.edu) . 
+@@ -21,12 +19,9 @@
+   * 
+  **/
+ 
+-public class LearningCurve
+-{
++public class LearningCurve {
+ 
+-
+-	public static void getLearningCurve(String trainFilename,String testFilename,String filesFormat)
+-	{	  
++	public static void getLearningCurve(String trainFilename,String testFilename,String filesFormat) {
+ 		NETaggerLevel1 tagger1 = new NETaggerLevel1();
+ 		tagger1.forget();
+ 		NETaggerLevel2 tagger2 = new NETaggerLevel2();
+@@ -39,76 +34,81 @@
+ 
+ 		Vector<LinkedVector> trainData=null;
+ 		Vector<LinkedVector> testData=null;
+-		if(filesFormat.equalsIgnoreCase("-c")){
++		if (filesFormat.equalsIgnoreCase("-c")) {
+ 			Reuters2003Parser parser = new Reuters2003Parser(trainFilename);
+ 			trainData=parser.readAndAnnotate();
+ 			parser = new Reuters2003Parser(testFilename);
+ 			testData=parser.readAndAnnotate();
+ 		}
++		else if (filesFormat.equalsIgnoreCase("-r")) { 
++			trainData=BracketFileManager.readAndAnnotate(new InFile(trainFilename));
++			testData=BracketFileManager.readAndAnnotate(new InFile(testFilename));
++		}
+ 		else{
+-			if(filesFormat.equalsIgnoreCase("-r")){
+-				trainData=BracketFileManager.readAndAnnotate(trainFilename);
+-				testData=BracketFileManager.readAndAnnotate(testFilename);
+-			}
+-			else{
+-				System.out.println("Unrecognized File format: "+filesFormat);
+-			}
++			System.out.println("Unrecognized File format: "+filesFormat);
+ 		}
+ 
+ 		
+-		for (int i = 0; i < Parameters.trainingRounds; ++i)
+-		{
+-			System.out.println("Learning round "+i);
++		int round;
++		for (int i = 0; i < Parameters.trainingRounds; ++i) {
++			round = i + 1;
++			System.out.println("Learning round "+ round);
+ 			NETester.clearPredictions(trainData);
+ 			NETaggerLevel1.isTraining=true;
+ 			NETaggerLevel2.isTraining=true;
+ 
+-			if(Parameters.taggingScheme.equalsIgnoreCase(Parameters.BILOU))
++			if (Parameters.taggingScheme.equalsIgnoreCase(Parameters.BILOU)) {
+ 				Bio2Bilou.Bio2BilouLabels(trainData);
++			}
+ 				
+-			if(Parameters.featuresToUse.containsKey("PatternFeatures"))
++			if (Parameters.featuresToUse.containsKey("PatternFeatures")) {
+ 				PatternExtractor.annotate(trainData, true, false);
+-			if(Parameters.featuresToUse.containsKey("PredictionsLevel1")){
++			}
++			if (Parameters.featuresToUse.containsKey("PredictionsLevel1")) {
+ 				GlobalFeatures.aggregateLevel1Predictions(trainData);
+ 				GlobalFeatures.aggregateEntityLevelPredictions(trainData);
+ 				//GlobalFeatures.displayLevel1AggregationData(trainData);
+ 			}
+-			for (int k=0;k<trainData.size();k++)
+-				for (int j=0;j<trainData.elementAt(k).size();j++){
++			for (int k=0; k < trainData.size(); k++) {
++				for (int j=0; j < trainData.elementAt(k).size(); j++) {
+ 					tagger1.learn(trainData.elementAt(k).get(j));
+-					if(Parameters.featuresToUse.containsKey("PatternFeatures")||Parameters.featuresToUse.containsKey("PredictionsLevel1"))
++					if ( Parameters.featuresToUse.containsKey("PatternFeatures")
++						|| Parameters.featuresToUse.containsKey("PredictionsLevel1")) {
+ 						tagger2.learn(trainData.elementAt(k).get(j));
++					}
+ 				}
++			}
+ 			//after we're done training, go back to BIO. This will not cause
+ 			//problems when testing because all the "pattern extraction" and
+ 			//"prediction aggregation" will use the predicted tags and not the
+ 			//gold labels.
+-			if(Parameters.taggingScheme.equalsIgnoreCase(Parameters.BILOU))
++			if (Parameters.taggingScheme.equalsIgnoreCase(Parameters.BILOU)) {
+ 				Bio2Bilou.Bilou2BioLabels(trainData);
++			}
+ 
+ 			
+-			System.out.println("Testing round "+i);
++			System.out.println("Testing round " + round);
+ 			TestDiscrete[] results = NETester.printTestResults(testData,tagger1,tagger2);
+ 			double f1Level1 = results[0].getOverallStats()[2];
+-			System.out.println("Level1: "+(i + 1) + "\t" + f1Level1);
++			System.out.println("Level1: "+ round + "\t" + f1Level1);
+ 			double f1Level2 = results[1].getOverallStats()[2];
+-			System.out.println("Level2: "+(i + 1) + "\t" + f1Level2);
++			System.out.println("Level2: "+ round + "\t" + f1Level2);
+ 
+-			if (f1Level1 > bestF1Level1)
+-			{
++			if (f1Level1 > bestF1Level1) {
+ 				bestF1Level1 = f1Level1;
+-				bestRoundLevel1 = i + 1;
++				bestRoundLevel1 = round;
+ 				NETaggerLevel1.getInstance().binaryWrite(Parameters.pathToModelFile+".level1");
+ 			}
+-			if (f1Level2 > bestF1Level2)
+-			{
++			if (f1Level2 > bestF1Level2) {
+ 				bestF1Level2 = f1Level2;
+-				bestRoundLevel2 = i + 1;
++				bestRoundLevel2 = round;
+ 				NETaggerLevel2.getInstance().binaryWrite(Parameters.pathToModelFile+".level2");
+ 			}
+ 
+-			if ((i + 1) % 5 == 0)
+-				System.err.println((i + 1) + " rounds.  Best so far: Level1(" + bestRoundLevel1 + ")=" + bestF1Level1+" Level2(" + bestRoundLevel2 + ") " + bestF1Level2);
++			if ( round % 5 == 0 ) {
++				System.err.println(round + " rounds.  Best so far: Level1(" + bestRoundLevel1 + ")="
++					+ bestF1Level1+" Level2(" + bestRoundLevel2 + ") " + bestF1Level2);
++			}
+ 		}
+ 	}
+ }
+--- LbjNerTagger1.11.release/src/LbjTagger/BrownClusters.java	2008-12-11 14:21:55.000000000 -0500
++++ LbjNerTagger1.11.oclc/src/LbjTagger/BrownClusters.java	2010-02-18 12:39:49.000000000 -0500
+@@ -3,11 +3,11 @@
+ import java.util.Hashtable;
+ import java.util.StringTokenizer;
+ import java.util.Vector;
++import java.io.Reader;
++import java.io.File;
+ 
+ import IO.InFile;
+ 
+-
+-
+ /**
+   * This project was started by Nicholas Rizzolo (rizzolo@uiuc.edu) . 
+   * Most of design, development, modeling and
+@@ -23,10 +23,22 @@
+ public class BrownClusters {
+ 	public static Hashtable<String,String> wordToPath=null;
+ 	public static final int[] prefixLengths ={4,6,10,20}; 
++	public static final String DEFAULT_BROWN_CLUSTERS = "Data/BrownHierarchicalWordClusters/brownBllipClusters";
+ 	
+ 	public static void init(){
++		init(new File(DEFAULT_BROWN_CLUSTERS));
++	}
++
++	public static void init(File configFile){
++		doInit(new InFile(configFile));
++	}
++
++	public static void init(Reader configReader){
++		doInit(new InFile(configReader));
++	}
++
++	private static void doInit(InFile in){
+ 		wordToPath=new Hashtable<String, String>();
+-		InFile in=new InFile("Data/BrownHierarchicalWordClusters/brownBllipClusters");
+ 		String line=in.readLine();
+ 		int wordsAdded=0;
+ 		while(line!=null){
+@@ -41,9 +53,9 @@
+ 			}
+ 			line=in.readLine();
+ 		}
+-		System.out.println(wordsAdded+" words added");
+-	}	
+-	
++		//System.out.println(wordsAdded+" words added");
++	}
++
+ 	public static String[] getPrefixes(String word){
+ 		if(wordToPath==null||(!wordToPath.containsKey(word)))
+ 			return new String[0];
+@@ -64,9 +76,9 @@
+ 			System.out.print(" "+arr[i]);
+ 		System.out.println("");
+ 	}
+-	
++
+ 	public static void main(String[] args){
+-		init();
++		init(new File(DEFAULT_BROWN_CLUSTERS));
+ 		System.out.println("finance ");
+ 		printArr(getPrefixes("finance"));
+ 		System.out.println("help ");
+--- LbjNerTagger1.11.release/src/LbjTagger/BracketFileManager.java	2008-12-11 14:21:55.000000000 -0500
++++ LbjNerTagger1.11.oclc/src/LbjTagger/BracketFileManager.java	2010-02-18 12:33:03.000000000 -0500
+@@ -27,10 +27,14 @@
+ public class BracketFileManager{
+ 	
+ 	  public static Vector<LinkedVector> readAndAnnotate(String fileName){
+-		  System.out.println("Reading and annotating the file: "+fileName);
++		InFile in = new InFile(fileName);
++		return readAndAnnotate(in);
++	  }
++	  public static Vector<LinkedVector> readAndAnnotate(InFile in){
++		  //System.out.println("Reading and annotating the file: "+fileName);
+ 		  Vector<String> tokens=new Vector<String>();
+ 		  Vector<String> tags=new Vector<String>();
+-		  parseBracketedFile(fileName, tags, tokens);
++		  parseBracketedFile(in, tags, tokens);
+ 		  StringBuffer allText=new StringBuffer(tokens.size()*20);
+ 		  for(int i=0;i<tokens.size();i++)
+ 			  allText.append(tokens.elementAt(i)+" ");
+@@ -139,8 +143,10 @@
+ 	
+ 	
+ 	public static void parseBracketedFile(String filename,Vector<String> tags,Vector<String> words){
+-		System.out.println("Parsing a bracketed FILE: "+filename);
+ 		InFile in=new InFile(filename);
++		parseBracketedFile(in, tags, words);
++	}
++	public static void parseBracketedFile(InFile in,Vector<String> tags,Vector<String> words){
+ 		String line=in.readLine();
+ 		StringBuffer text=new StringBuffer();
+ 		while(line!=null){
+--- LbjNerTagger1.11.release/src/LbjTagger/Gazzetteers.java	2008-12-11 14:21:55.000000000 -0500
++++ LbjNerTagger1.11.oclc/src/LbjTagger/Gazzetteers.java	2010-02-18 12:47:36.000000000 -0500
+@@ -6,6 +6,7 @@
+ import java.util.*;
+ import java.io.*;
+ 
++import java.net.URL;
+ 
+ 
+ /**
+@@ -22,81 +23,96 @@
+ 
+ public class Gazzetteers{
+ 	
+-	public static Vector<String> dictNames=new Vector<String>();
+-	public  static Vector<Hashtable<String,Boolean>> dictionaries=null;
++	public static Vector<String> dictNames; // = new Vector<String>();
++	public static Vector<Hashtable<String,Boolean>> dictionaries=null;
+ 	public static Vector<Hashtable<String, Boolean>> dictionariesIgnoreCase = null;
+ 	public static Vector<Hashtable<String, Boolean>> dictionariesOneWordIgnorePunctuation = null;
+ 
+ 	public static void init(String pathToDictionaries){
+-		dictNames=new Vector<String>();
+-		dictionaries=null;
+-		dictionariesIgnoreCase = null;
+-		dictionariesOneWordIgnorePunctuation = null;
+-		System.out.println("loading dazzetteers....");
+-		Vector<String> filenames=new Vector<String>();
+-		String[] allfiles=(new File(pathToDictionaries)).list();
+-		for(int i=0;i<allfiles.length;i++)
+-			if((new File(pathToDictionaries+"/"+allfiles[i])).isFile()){
+-				filenames.addElement(pathToDictionaries+"/"+allfiles[i]);
++		Vector<String> dictNames = new Vector<String>();
++
++		String[] allfiles = (new File(pathToDictionaries)).list();
++		for (int i = 0; i < allfiles.length; i++) {
++			if ( (new File(pathToDictionaries+"/"+allfiles[i])).isFile() ) {
+ 				dictNames.addElement(allfiles[i]);
+ 			}
+-		dictionaries=new Vector<Hashtable<String,Boolean>>(filenames.size());
+-		dictionariesIgnoreCase=new Vector<Hashtable<String,Boolean>>(filenames.size());
+-		dictionariesOneWordIgnorePunctuation=new Vector<Hashtable<String,Boolean>>(filenames.size());
++		}
++
++		init(pathToDictionaries, dictNames);
++	}
++
++	public static void init(String pathToDictionaries, Vector<String> dictNames){
++		Gazzetteers.dictNames = dictNames;
++
++		Vector<String> filenames = new Vector<String>();
++		Iterator<String> iterator = dictNames.subList(0, dictNames.size()).iterator();
++		while (iterator.hasNext()) {
++			filenames.addElement(pathToDictionaries + "/" + iterator.next());
++		}
++
++		dictionaries = new Vector<Hashtable<String,Boolean>>(filenames.size());
++		dictionariesIgnoreCase = new Vector<Hashtable<String,Boolean>>(filenames.size());
++		dictionariesOneWordIgnorePunctuation = new Vector<Hashtable<String,Boolean>>(filenames.size());
+ 		
+-		for(int i=0;i<filenames.size();i++)
+-		{
+-			System.out.println("\tloading gazzetteer:...."+filenames.elementAt(i));
++		for (int i = 0; i < filenames.size(); i++) {
++			//System.out.println("\tloading gazzetteer:...."+filenames.elementAt(i));
+ 			dictionaries.addElement(new Hashtable<String,Boolean>());
+ 			dictionariesIgnoreCase.addElement(new Hashtable<String,Boolean>());
+ 			dictionariesOneWordIgnorePunctuation.addElement(new Hashtable<String,Boolean>());
+-			InFile in=new InFile(filenames.elementAt(i));
+-			String line=in.readLine();
+-			while(line!=null){
++
++			InFile in;
++			try { in = new InFile(ReaderUtil.getReader(filenames.elementAt(i))); }
++			catch (FileNotFoundException e) { continue; }
++		
++			String line = in.readLine();
++			while(line != null){
+ 				dictionaries.elementAt(i).put(line,true);
+-				if((!line.equalsIgnoreCase("in"))&&(!line.equalsIgnoreCase("on"))&&(!line.equalsIgnoreCase("us"))&&(!line.equalsIgnoreCase("or"))&&(!line.equalsIgnoreCase("am")))
++				if ( (!line.equalsIgnoreCase("in")) && (!line.equalsIgnoreCase("on")) && (!line.equalsIgnoreCase("us"))
++						&& (!line.equalsIgnoreCase("or")) &&(!line.equalsIgnoreCase("am")) ) {
+ 					dictionariesIgnoreCase.elementAt(i).put(line.toLowerCase(),true);
+-				StringTokenizer st=new StringTokenizer(line," ");
++				}
++
++				StringTokenizer st = new StringTokenizer(line," ");
+ 				while(st.hasMoreTokens()){
+-					String s=StringStatisticsUtils.MyString.cleanPunctuation(st.nextToken());
+-					if(s.length()>=5&&Character.isUpperCase(s.charAt(0))){
++					String s = StringStatisticsUtils.MyString.cleanPunctuation(st.nextToken());
++					if(s.length() >= 5 && Character.isUpperCase(s.charAt(0))){
+ 						dictionariesOneWordIgnorePunctuation.elementAt(i).put(s,true);
+ 					}
+ 				}
+-				line=in.readLine();
++				line = in.readLine();
+ 			}
+ 			in.close();
+ 		}
+-		System.out.println("found "+dictionaries.size()+" gazetteers");
++		//System.out.println("CONFIG: dictionaries: " + dictionaries.size() + "; dictNames: " + dictNames.size());
++		//System.out.println("found "+dictionaries.size()+" gazetteers");
+ 	}
+-	
+-	public static void annotate(NEWord w)
+-	{
+-		w.gazetteers=new Vector<String>();
+-		
+-	       	for(int j=0;j<dictionaries.size();j++)
+-		{
++
++
++	public static void annotate(NEWord w) {
++		w.gazetteers = new Vector<String>();
++
++		for(int j = 0; j < dictionaries.size(); j++) {
+ 			if(dictionariesOneWordIgnorePunctuation.elementAt(j).containsKey(StringStatisticsUtils.MyString.cleanPunctuation(w.form))){
+-			    //BE CAREFULE WITH THE "PART-" PREFIX! IT'S USED ELSEWHERE!!!
++				//BE CAREFULE WITH THE "PART-" PREFIX! IT'S USED ELSEWHERE!!!
+ 				w.gazetteers.addElement("Part-"+dictNames.elementAt(j));
+ 			}
+ 		}
++
++		//System.out.println("DEBUG: dictionaries: " + dictionaries.size() + "; dictNames: " + dictNames.size());
+ 	       
+ 		NEWord start=w;
+ 		NEWord endWord=(NEWord)(w.next);
+ 		String expression=w.form;
+ 		boolean changeEnd=true;
+-		for(int i=0;i<5&&changeEnd;i++)
+-		{
++		for (int i = 0; i < 5 && changeEnd; i++) {
+ 			changeEnd=false;
+-			for(int j=0;j<dictionaries.size();j++)
+-			{
+-				if(dictionaries.elementAt(j).containsKey(expression))
+-				{
++			for (int j = 0; j < dictionaries.size(); j++) {
++				if (dictionaries.elementAt(j).containsKey(expression)) {
+ 					NEWord temp=start;
+-					if(temp.gazetteers==null)
++					if (temp.gazetteers==null) {
+ 						temp.gazetteers=new Vector<String>();
+-					if(i==0){
++					}
++					if (i==0) {
+ 						temp.gazetteers.addElement("U-"+dictNames.elementAt(j));
+ 					}
+ 					else{
+--- LbjNerTagger1.11.release/src/LbjTagger/ShapeClassifierManager.java	2008-12-11 14:21:55.000000000 -0500
++++ LbjNerTagger1.11.oclc/src/LbjTagger/ShapeClassifierManager.java	2010-02-18 13:13:31.000000000 -0500
+@@ -1,10 +1,15 @@
+ package LbjTagger;
+ 
++import java.io.File;
++import java.io.InputStream;
++import java.io.ObjectInputStream;
+ import java.io.IOException;
+ import java.util.StringTokenizer;
+ import java.util.Vector;
++import java.util.zip.GZIPInputStream;
+ 
+ import lbj.NETypeTagger;
++import IO.ReaderUtil;
+ import IO.InFile;
+ import IO.Keyboard;
+ import LBJ2.classify.Classifier;
+@@ -27,6 +32,7 @@
+  **/
+ 
+ public class ShapeClassifierManager {
++	private static final String DEFAULT_SHAPE_FILE = "Data/Models/shapeClassifier";
+ 	
+ 	public static NETypeTagger shapeClassifier=new NETypeTagger();
+ 	public final static int minWordLen=4;//the minimum word length we're willing to run the shape classifier on
+@@ -133,17 +139,55 @@
+ 	}
+ 	
+ 	public static void save(){
+-		System.out.println("saving shape classifier");
+-		NETypeTagger.getInstance().binaryWrite("Data/Models/shapeClassifier");
+-		System.out.println("Done-saving shape classifier");
++		//System.out.println("START saving shape classifier");
++		save(new File(DEFAULT_SHAPE_FILE));
++		//System.out.println("END   saving shape classifier");
++	}
++
++	public static void save(File shapeFile){
++		//System.out.println("START saving shape classifier");
++		NETypeTagger.getInstance().binaryWrite(shapeFile.toString());
++		//System.out.println("END   saving shape classifier");
+ 	}
+ 
+ 	public static void load(){
+-		System.out.println("loading shape classifier");
+-		shapeClassifier=(NETypeTagger)Classifier.binaryRead("Data/Models/shapeClassifier");
+-		System.out.println("Done loading shape classifier");
++		load(new File(DEFAULT_SHAPE_FILE));
+ 	}
+-	
++
++	public static void load(File shapeFile){
++		//System.out.println("START loading shape classifier");
++		shapeClassifier = (NETypeTagger)Classifier.binaryRead(shapeFile.toString(), "ShapeClassifier");
++		//System.out.println("END   loading shape classifier");
++	}
++
++	public static void load(InputStream is) {
++		try {
++			load(new GZIPInputStream(is));
++		}
++		catch (Exception e) {
++			e.printStackTrace();
++			System.exit(1);
++		}
++	}
++	public static void load(GZIPInputStream is) {
++		try {
++			load(new ObjectInputStream(is));
++		}
++		catch (Exception e) {
++			e.printStackTrace();
++			System.exit(1);
++		}
++	}
++	public static void load(ObjectInputStream is) {
++		try {
++			shapeClassifier = (NETypeTagger)Classifier.binaryRead(is, "ShapeClassifier");
++		}
++		catch (Exception e) {
++			e.printStackTrace();
++			System.exit(1);
++		}
++	}
++
+ 	public static void main(String[] args) throws IOException{
+ 		load();
+ 		String s="";
+--- LbjNerTagger1.11.release/src/LbjTagger/Parameters.java	2008-12-11 14:21:55.000000000 -0500
++++ LbjNerTagger1.11.oclc/src/LbjTagger/Parameters.java	2010-02-18 13:04:12.000000000 -0500
+@@ -1,12 +1,9 @@
+ package LbjTagger;
+ 
+ import java.util.*;
+-
+-
++import java.io.File;
+ import IO.InFile;
+ 
+-
+-
+ /**
+   * This project was started by Nicholas Rizzolo (rizzolo@uiuc.edu) . 
+   * Most of design, development, modeling and
+@@ -22,7 +19,7 @@
+ public class Parameters extends ParametersForLbjCode{
+ 	
+ 	public static void readConfigAndLoadExternalData(String configFile){
+-		InFile in=new InFile(configFile);
++		InFile in=new InFile(new File(configFile));
+ 		taggingScheme=in.readLine();
+ 		pathToModelFile=in.readLine();
+ 		tokenizationScheme=in.readLine();
+--- LbjNerTagger1.11.release/cleanCompileProject	2008-12-09 21:29:25.000000000 -0500
++++ LbjNerTagger1.11.oclc/cleanCompileProject	2010-06-18 16:25:56.000000000 -0400
+@@ -4,14 +4,16 @@
+ cpath="LBJ2.jar:LBJ2Library.jar:bin"
+ srcdir="src/IO:src/StringStatisticsUtils:src/LbjTagger"
+ 
++JAVA=$(which java)
++JAVAC=$(which javac)
+ 
+ rm bin/IO/*.class bin/StringStatisticsUtils/*.class  bin/LbjTagger/*.class bin/lbj/*.class bin/lbj/*.lc
+ rm src/lbj/*.java 
+ 
+-javac -cp $cpath -d bin -sourcepath ${srcdir} ./src/IO/*.java ./src/StringStatisticsUtils/*.java 
+-javac -cp $cpath -d bin -sourcepath ${srcdir} ./src/LbjTagger/NEWord.java
+-javac -cp $cpath -d bin -sourcepath ${srcdir} ./src/LbjTagger/RandomLabelGenerator.java ./src/LbjTagger/ParametersForLbjCode.java ./src/LbjTagger/Gazzetteers.java ./src/LbjTagger/BrownClusters.java ./src/LbjTagger/BrownClusters.java
+-java -cp $cpath LBJ2.Main -d bin -gsp src LbjTagger.lbj
+-javac -cp $cpath -d bin -sourcepath ${srcdir}  ./src/LbjTagger/*.java
++$JAVAC -cp $cpath -d bin -sourcepath ${srcdir} ./src/IO/*.java ./src/StringStatisticsUtils/*.java 
++$JAVAC -cp $cpath -d bin -sourcepath ${srcdir} ./src/LbjTagger/NEWord.java
++$JAVAC -cp $cpath -d bin -sourcepath ${srcdir} ./src/LbjTagger/RandomLabelGenerator.java ./src/LbjTagger/ParametersForLbjCode.java ./src/LbjTagger/Gazzetteers.java ./src/LbjTagger/BrownClusters.java ./src/LbjTagger/BrownClusters.java
++$JAVA -cp $cpath LBJ2.Main -d bin -gsp src LbjTagger.lbj
++$JAVAC -cp $cpath -d bin -sourcepath ${srcdir}  ./src/LbjTagger/*.java
+ 
+ 
