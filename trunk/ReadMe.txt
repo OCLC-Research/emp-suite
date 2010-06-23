@@ -44,7 +44,7 @@ emp-suite/
                                 --------/ This can be useful when another tagging tool adds space characters.
                 --------/ Clicking on 'As CONLL' will show the text as it looks in CONLL.
                 --------/ Clicking on 'As HTML' will show the color-ized version of the tagging.
-                --------/ To save the CONLL tagged version, you must click on 'As CONLL' and then manually opy and paste the text into a file.
+                --------/ To save the CONLL tagged version, you must click on 'As CONLL' and then manually copy and paste the text into a file.
 
 --------/uiuc-ner
         --------/ Description
@@ -128,4 +128,40 @@ emp-suite/
                 --------/ To build the sample model, just execute the 'train' script from the model.one directory.
                 --------/ To build your own model, copy your training-gold data into the model.one/data directory
                 --------/ and make sure all the configuration settings above are set accordingly. Then execute the 'train' script.
+
+--------/tagging
+        --------/ Description
+                --------/ Find and tag Named Entities.
+        --------/ Requirements
+                --------/ OCLC NER - see oclc-ner above
+                --------/ UIUC NER - see uiuc-ner above
+                --------/ Text to be tagged 
+                --------/ Java 1.6 - http://java.sun.com/
+                --------/ Bash 4.1 - http://www.gnu.org/software/bash/bash.html
+        --------/ Configuration
+                --------/ tagger
+                        --------/ input_dir=input
+                                --------/ The directory with files to be tagged. All files in the directory will be processed,
+                                --------/ except hidden files and the 'tagger.prop' file.
+                        --------/ output_dir=output
+                                --------/ The directory where tagged files will be put, named identically to input files.
+                --------/ input/tagger.prop 
+                        --------/ configLocation = /Config/allFeaturesBigTrainingSet.config
+                                --------/ Pointer to a UIUC model configuration file.
+                        --------/ configLocationType = resource
+                                --------/ Is the configuration a resource (located in a JAR) or a file (located on disk).
+                        --------/ modelType = resource
+                                --------/ Is the model a resource (located in a JAR) or a file (located on disk).
+                        --------/ shapeClassifier = /Data/Models/shapeClassifier
+                                --------/ Pointer to the shape classifier for the model.
+                        --------/ shapeClassifierType = resource
+                                --------/ Is the shape classifier a resource (located in a JAR) or a file (located on disk).
+        --------/ Usage
+                --------/ Make a copy of the "skeleton" directory for each dataset you want to tag.
+                --------/ e.g., cp -r skeleton ner.dataset
+                --------/ Copy files-to-be-tagged into the the ner.dataset/input directory.
+                --------/ Edit the ner.dataset/input/tagger.prop file as needed.
+                        --------/ If you're using the default model distributed with the UIUC NER, then you need not make any changes.
+                --------/ Execute the ner.dataset/tagger script.
+                --------/ The output of the process will be in ner.dataset/output
 
