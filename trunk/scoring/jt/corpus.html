@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><title>{{ config['html']['title'] }}</title>
+<meta name="dc.creator" content="Devon Smith">
+<meta name="dcterms.created" content="2010-03-23">
+<meta name="generator" content="">
+<meta name="generated" content="Tue Mar 30 09:27:58 2010">
+<meta name="dc.format" content="text/html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><style type='text/css'>
+body { font-size: x-small; }
+td {
+	vertical-align: top;
+	border-bottom: double medium black;
+	border-right: solid medium black;
+	padding-left: 3pt;
+	padding-right: 3pt;
+}
+td.gold { background-color: #EEDD82; }
+th {
+	text-align: left;
+	border-bottom: double medium black;
+	padding-right: 3pt;
+}
+</style></head><body>
+{% macro metrics(v) -%}
+<td>{{ v["truepos"] }}</td><td>{{ v["falsepos"] }}</td><td>{{ v["trueneg"] }}</td><td>{{ v["falseneg"] }}</td><td>{{ "%.2f"|format(v["precision"]) }}</td><td>{{ "%.2f"|format(v["recall"]) }}</td><td>{{ "%.2f"|format(v["fmeasure"]) }}</td><td>{{ v["parttruepos"] }}</td><td>{{ v["partfalsepos"] }}</td><td>{{ "%.2f"|format(v["partprecision"]) }}</td><td>{{ "%.2f"|format(v["partrecall"]) }}</td><td>{{ "%.2f"|format(v["partfmeasure"]) }}</td>
+{%- endmacro %}
+
+{% macro metrics_abbr(v) -%}
+<td>{{ v["truepos"] }}</td>
+<td>{{ v["falsepos"] }}</td>
+<td>{{ v["trueneg"] }}</td>
+<td>{{ v["falseneg"] }}</td>
+<td>{{ v["parttruepos"] }}</td>
+<td>{{ v["partfalsepos"] }}</td>
+{%- endmacro %}
+
+<h1>{{ corpus['display_label'] }} Dataset</h1>
+
+{% set freq	 = corpus['frequency'] %}
+<h3>Tag Frequency</h3>
+<table cellspacing='0' cellpadding='0' border='0'>
+<tr><th/>{% for model in freq|sort %}<th>{{ model }}</th>{% endfor %}</tr>
+{% for tag in config['setup']['tags']  %}
+<tr><td>{{ tag }}</td>{% for model in freq|sort %}<td>{{ freq[model][tag] }}</td>{% endfor %}</tr>
+{% endfor %}
+</table>
+
+<hr/>
+
+{% set collated = corpus['collated'] %}
+<h3>Tag Detail</h3>
+<table cellspacing='0' cellpadding='0' border='0'>
+<tr><th>Index</th><th>Tool</th><th>TP</th><th>FP</th><th>TN</th><th>FN</th><th>PTP</th><th>PFP</th><th>Text</th></tr>
+{% for index in collated|sort %}
+<tr><td rowspan='{{ collated[index]|length }}'>{{ loop.index }}</td>
+		<td class='gold'>{{ config['html']['goldlabel'] }}</td>
+		<td class='gold' colspan='6'>&nbsp;</td>
+		<td class='gold'>{{ collated[index]["gold"] }}</td></tr>
+{% for version in collated[index]|sort if version != 'gold' %}{% set m = collated[index][version]['metric'] %}
+<tr><td>{{ version }}</td> {{ metrics_abbr(m) }}<td>{{ collated[index][version]['text'] }}</td></tr>{% endfor %}
+{% endfor %}</table>
+</body></html>

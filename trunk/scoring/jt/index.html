@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><title>{{ config['html']['title'] }}</title>
+<meta name="dc.creator" content="Devon Smith">
+<meta name="dcterms.created" content="2010-03-23">
+<meta name="generator" content="">
+<meta name="generated" content="Tue Mar 30 09:27:58 2010">
+<meta name="dc.format" content="text/html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><style type='text/css'>
+body { font-size: small; }
+td {
+	vertical-align: top;
+	text-align: right;
+	border-bottom: double medium black;
+	border-right: solid medium black;
+	padding-left: 3pt;
+	padding-right: 3pt;
+	white-space: nowrap;
+}
+th {
+	text-align: left;
+	border-bottom: double medium black;
+	padding-right: 3pt;
+	white-space: nowrap;
+}
+</style></head><body>
+<h1>{{ config['html']['title'] }}</h1>
+<table>
+<tr>{% for t in config['models'] | sort %}<th><a href="{{ t }}.html">{{ config['models'][t]['label'] }}</a></th>{% endfor %}</tr>
+<tr>{% for t in config['models'] | sort %}<td><img src="{{ t }}.png"/></td>{% endfor %}</tr>
+</table>
+</body></html>
