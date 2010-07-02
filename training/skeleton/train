@@ -57,7 +57,7 @@ properties_file=$here/config/sample.prop
 test_file=${training_gold}
 # The format for the training and testing data. Again, shouldn't need to change.
 training_gold_format="-r"
-# The trainer requires a lot of memory; keep this number has high as your system will allow.
+# The trainer requires a lot of memory; keep this number as high as your system will allow.
 # See java documentation for valid values.
 MEMORY=2000m
 ##########

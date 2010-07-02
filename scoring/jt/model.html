@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><title>{{ config['html']['title'] }}</title>
+<meta name="dc.creator" content="Devon Smith">
+<meta name="dcterms.created" content="2010-03-23">
+<meta name="generator" content="">
+<meta name="generated" content="Tue Mar 30 09:27:58 2010">
+<meta name="dc.format" content="text/html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><style type='text/css'>
+body { font-size: small; width; 110%; }
+td {
+	vertical-align: top;
+	text-align: right;
+	border-bottom: double medium black;
+	border-right: solid medium black;
+	padding-left: 3pt;
+	padding-right: 3pt;
+	white-space: nowrap;
+}
+th {
+	text-align: left;
+	border-bottom: double medium black;
+	padding-right: 3pt;
+	white-space: nowrap;
+}
+tr.model td {
+	background-color: lightgreen;
+}
+tr.corpus td {
+	background-color: pink;
+}
+tr.tagbreakout {
+	display: table-row;
+}
+img#metric-graph {
+	float: right;
+	border: solid thin blue;
+}
+</style></head><body>
+{% macro metrics(v) -%}
+    <td>{{ v["truepos"] }}</td><td>{{ v["falsepos"] }}</td><td>{{ v["trueneg"] }}</td><td>{{ v["falseneg"] }}</td>
+    <td>{{ "%.2f"|format(v["precision"]) }}</td><td>{{ "%.2f"|format(v["recall"]) }}</td><td>{{ "%.2f"|format(v["fmeasure"]) }}</td>
+    <td>{{ v["parttruepos"] }}</td><td>{{ v["partfalsepos"] }}</td>
+    <td>{{ "%.2f"|format(v["partprecision"]) }}</td><td>{{ "%.2f"|format(v["partrecall"]) }}</td><td>{{ "%.2f"|format(v["partfmeasure"]) }}</td>
+{%- endmacro %}
+
+{% macro tag_row_plus(tag, v, f) -%}
+<tr class='tagbreakout'><td/><td/><td>{{ tag }}</td><td>{{ f }}</td>
+<td>{{ v["truepos"] }}</td><td>{{ v["falsepos"] }}</td><td>{{ v["trueneg"] }}</td><td>{{ v["falseneg"] }}</td>
+<td>{{ "%.2f"|format(v["precision"]) }}</td><td>{{ "%.2f"|format(v["recall"]) }}</td><td>{{ "%.2f"|format(v["fmeasure"]) }}</td>
+<td>{{ v["parttruepos"] }}</td><td>{{ v["partfalsepos"] }}</td>
+<td colspan='3'><!-- for precision, recall, f-measure --></td></tr>
+{%- endmacro %}
+
+{% macro tag_row(tag, v, f) -%}
+<tr class='tagbreakout'><td/><td/><td>{{ tag }}</td><td>{{ f }}</td>
+<td>{{ v["truepos"] }}</td><td>{{ v["falsepos"] }}</td><td>{{ v["trueneg"] }}</td><td>{{ v["falseneg"] }}</td>
+<td colspan='3'><!-- for precision, recall, f-measure --></td>
+<td>{{ v["parttruepos"] }}</td><td>{{ v["partfalsepos"] }}</td>
+<td colspan='3'><!-- for precision, recall, f-measure --></td></tr>
+{%- endmacro %}
+
+{% macro corpus_block(corpus, name) -%}
+<tr class='corpus'><td/><td><a href="{{ name }}.html">{{ corpus['display'] }}</a></td><td/><td/>{{ metrics(corpus['summary']) }}</tr>
+{% for tag in config['setup']['tags'] %}
+{% if tag in corpus['tags'] %}{{ tag_row(tag, corpus['tags'][tag], corpus['frequency'][tag]) }}
+{% else %}
+<tr><td/><td/><td>{{ tag }}</td><td>{{ corpus['frequency'][tag] }}</td>
+<td colspan='4' style='text-align: center'/><td colspan='3' style='text-align: center'/>
+<td colspan='2' style='text-align: center'/><td colspan='3' style='text-align: center'/></tr>
+{% endif %}
+{% endfor %}
+{%- endmacro %}
+
+<div>
+<img id='metric-graph' src='{{ key }}.png'/>
+<table style='width: 600px;' cellspacing='0'>
+<tr><th>Tool</th><th>Corpus</th><th>Tag</th><th>Frequency</th><th>TP</th><th>FP</th><th>TN</th><th>FN</th><th>P</th><th>R</th><th>F</th><th>P-TP</th><th>P-FP</th><th>P-P</th><th>P-R</th><th>P-F</th></tr>
+<tr class='model'><td>{{ model['label'] }}</td><td/><td/><td/>{{ metrics(model['score']['summary']) }}</tr>
+{% for tag in config['setup']['tags'] %}
+{{ tag_row_plus(tag, model['score']['tags'][tag], model['score']['frequency'][tag] ) }}
+{% endfor %}
+{% for corpus in model['score']['corpora']|sort %}
+{{ corpus_block(model['score']['corpora'][corpus], corpus) }}
+{% endfor %}
+</table>
+</div>
+</body></html>

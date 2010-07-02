@@ -44,7 +44,9 @@ emp-suite/
                                 --------/ This can be useful when another tagging tool adds space characters.
                 --------/ Clicking on 'As CONLL' will show the text as it looks in CONLL.
                 --------/ Clicking on 'As HTML' will show the color-ized version of the tagging.
-                --------/ To save the CONLL tagged version, you must click on 'As CONLL' and then manually copy and paste the text into a file.
+                --------/ To save the CONLL tagged version, click on 'As CONLL' and then manually copy and paste the text into a file.
+                --------/ If the data is created for scoring gold, the file should be moved to a sibling directory called 'gold-data.'
+                --------/ If the data is created for training gold, the file should be moved to a directory under the training module.
 
 --------/uiuc-ner
         --------/ Description
@@ -164,4 +166,49 @@ emp-suite/
                         --------/ If you're using the default model distributed with the UIUC NER, then you need not make any changes.
                 --------/ Execute the ner.dataset/tagger script.
                 --------/ The output of the process will be in ner.dataset/output
+
+--------/scoring
+        --------/ Description
+                --------/ Compare and score the text as tagged by an NER to Scoring-Gold.
+                --------/ A directory under scoring/data is created by the deploy for each file used for scoring, eg, scoring/data/my-file.
+                --------/ For each file, there must be 
+                        --------/ an original, untagged file
+                        --------/ a scoring gold file
+                        --------/ at least one model-tagged file
+        --------/ Requirements
+                --------/ Python 2.6.5 - http://www.python.org/
+                --------/ Python Yaml 3.09 - http://pyyaml.org
+                --------/ Jinja 2.5 - http://jinja.pocoo.org/2/
+                --------/ R 2.11 - http://www.r-project.org/
+                --------/ Original, untagged text
+                --------/ Gold tagged text
+                --------/ Model tagged text
+        --------/ Configuration
+                --------/ deploy
+                        --------/ Creates a directory under scoring/data for each file used to score models, eg, scoring/data/my-file.
+                        --------/ Copies required files (original, gold, model) into 
+                                --------/ Expects original files to be in directory called 'orginal' under the root of the repository.
+                                --------/ Expects gold files to be in directory called 'gold-data' under the root of the repository.
+                        --------/ models=()
+                                --------/ An array of model-directory names. These are the directories for the model tagged data
+                                --------/ and are located directly under the tagging module. Files will be copied
+                                --------/ from tagging/$model_prefix/output/$file.txt to scoring/data/$file/$model_prefix.txt
+                --------/ config.yml
+                        --------/ models:
+                                --------/ For each model being scored create a section under models
+                                --------/ sectionkey: a key used for the model being used, conventionally the same as prefix
+                                        --------/ label: A label for use in the Score Report
+                                        --------/ prefix: The model directory name - used to identify the model tagged file under scoring/data/$file
+                                                --------/ This should be one of the values on models=() from the deploy script.
+                        --------/ html:
+                                --------/ title: A title used in the Score Report
+                        --------/ corpora:
+                                --------/ A list of directories under score/data that should be used when scoring each model
+        --------/ Usage
+                --------/ Execute the deploy script
+                --------/ Execute the score.py script
+                --------/ Go to the ht/ directory and execute the serve script
+                        --------/ This script makes the score report web-accessable, ie, the contents of the ht directory.
+                        --------/ It prints a URL for accessing the report.
+                        --------/ Run the stop script when you're finished.
 
