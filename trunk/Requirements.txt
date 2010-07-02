@@ -1,0 +1,33 @@
+
+Below is the complete list requirements to use all the software in the suite.
+See ReadMe.txt for requirements broken down by module.
+The version numbers below are the versions used in development; other versions may be suitable.
+
+----/ UIUC CCG Named Entity Tagger 1.11 - http://l2r.cs.uiuc.edu/~cogcomp/asoftware.php?skey=FLBJNE
+
+----/ Java 1.6 - http://java.sun.com/
+  ----/ Restlet 1.0.11 - http://www.restlet.org/
+  ----/ Simple Framework 3.1.3 - http://www.simpleframework.org/
+
+----/ Python 2.6.5 - http://www.python.org/
+  ----/ Python Yaml 3.09 - http://pyyaml.org
+  ----/ Jinja 2.5 - http://jinja.pocoo.org/2/
+
+----/ Perl 5.10 - http://www.perl.org/
+  ----/ Perl Template Toolkit 2.22 - http://search.cpan.org/dist/Template-Toolkit/
+  ----/ Perl Yaml 0.71 - http://search.cpan.org/dist/YAML/
+  ----/ Plack 0.9920 - http://search.cpan.org/dist/Plack/
+
+----/ R 2.11 - http://www.r-project.org/
+
+----/ Web browser
+  ----/ Opera (best results) 10.10 - http://www.opera.com/
+  ----/ Firefox 3.6.3 - http://www.mozilla.com/firefox/
+  ----/ Internet Explorer 8 - http://www.microsoft.com/windows/internet-explorer/default.aspx
+
+----/ wget 1.12 - http://www.gnu.org/software/wget/wget.html
+----/ unzip 6.0 - http://www.info-zip.org/
+----/ tar 1.23 - http://www.gnu.org/software/tar/tar.html
+----/ patch 2.6.1 - http://www.gnu.org/software/patch/patch.html
+----/ bash 4.1 - http://www.gnu.org/software/bash/bash.html
+
