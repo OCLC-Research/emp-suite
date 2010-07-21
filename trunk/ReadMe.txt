@@ -220,3 +220,18 @@ emp-suite/
                         --------/ It prints a URL for accessing the report.
                         --------/ Run the stop script when you're finished.
 
+--------/util
+        --------/crop.pl
+                --------/ Usage: crop.pl input-file start-pattern end-pattern output-file
+                --------/ Description
+                        --------/ Extract a section of a file delimited by regular expressions.
+                        --------/ Extraction is done inclusive of the start- and end-pattern.
+        --------/strip_html_markup.pl
+                --------/ Usage: strip_html_markup.pl html-file text-file
+                --------/ Description
+                        --------/ Remove HTML tags from a file.
+        --------/strip_xml_markup.pl
+                --------/ Usage: strip_xml_markup.pl xml-file text-file [ --compress-whitespace ]
+                --------/ Description
+                        --------/ Remove XML tags from a file. If the '--compress-whitespace' option is supplied,
+                        --------/ contiguous whitespace in the resulting data will be compressed down to a single space.
