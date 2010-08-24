@@ -1,0 +1,73 @@
+#!/bin/bash
+# Begin train
+##############
+#$# creator : Devon Smith
+#%# email: smithde@oclc.org
+#$# created : 2009-07-20
+#$# title : train
+#$# description : Train an NER model 
+########## Define a usage function 
+function usage {
+    echo "Usage: $this"
+    if [ "$1" = "exit" ]; then exit; fi
+}
+########## Set to "false" to turn verbose off
+function echo_stdout { echo "$@"; }
+function echo_stderr { echo "$@" >& 2; }
+# Set verbose to 'echo_stderr' or 'echo_stdout' to see output trace info
+verbose=false
+$verbose Verbose output on ${verbose##*_}
+
+########## Setup some common paths
+# The absolute, canonical ( no ".." ) path to this script
+canonical=$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)/$(basename -- "$0")")
+# Just the filename of this script
+this=$(basename $canonical)
+$verbose This: $this
+# The directory this script is in
+here=$(dirname $canonical)
+$verbose Here: $here
+
+########## When the script is being executed
+today=$(date +%F)
+now=$(date +%H:%M:%S)
+$verbose Time: $today $now
+##########
+if [ "$1" = "-h" ]; then usage 'exit' ; fi
+##########
+JAVA=$(which java)
+
+moduledir=$(dirname $here)
+$verbose Module Dir: $moduledir
+
+libdir=$(dirname $moduledir)/lib
+$verbose Library Dir: $libdir
+
+jars=(oclc.ner.jar uiuc.ner.jar uiuc.ner.model.jar LBJ2.jar LBJ2Library.jar)
+for jar in ${jars[*]}; do CP=${CP:+$CP:}$libdir/$jar; done
+$verbose Classpath: $CP
+
+########## Configurable variables
+# The location of the training data
+training_gold=$here/data/sample-gold.conll
+# The location of the java properties file
+properties_file=$here/config/sample.prop
+########## Less configurable variables
+# The location of the testing data - shouldn't need to change unless you really know what you're doing
+test_file=${training_gold}
+# The format for the training and testing data. Again, shouldn't need to change.
+training_gold_format="-r"
+# The trainer requires a lot of memory; keep this number as high as your system will allow.
+# See java documentation for valid values.
+MEMORY=2000m
+##########
+
+CLASS=org.oclc.gateman.CmdLineTrainer
+# Usage: org.oclc.gateman.CmdLineTrainer file-format config-file training-file testing-file
+#	file-format: -c or -r
+
+$JAVA -Xmx$MEMORY -cp $CP $CLASS $training_gold_format $properties_file $training_gold $test_file
+
+############
+# End train
+# vim:ts=4:indentexpr=

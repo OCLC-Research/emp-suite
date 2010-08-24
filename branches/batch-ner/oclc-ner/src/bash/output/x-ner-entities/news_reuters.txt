@@ -1,0 +1,70 @@
+PER	Bush
+PER	Gustav
+PER	Tim Gaynor
+LOC	NEW ORLEANS
+ORG	Reuters
+PER	George W. Bush
+LOC	Louisiana
+PER	Gustav
+LOC	New Orleans
+PER	Bush
+PER	Katrina
+PER	Bush
+ORG	Republican National Convention
+PER	Gustav
+LOC	Baton Rouge
+LOC	New Orleans
+ORG	Jefferson Parish
+LOC	New Orleans
+PER	Gustav
+LOC	Louisiana
+LOC	New Orleans
+PER	Homemaker Christy Murray
+PER	Katrina
+PER	Gustav
+PER	Katrina
+LOC	Alabama
+PER	Bush
+LOC	Louisiana
+LOC	New Orleans
+PER	Ray Nagin
+ORG	City Council
+PER	Jackie Clarkson
+PER	Nagin
+PER	Gustav
+LOC	New Orleans
+LOC	Louisiana
+LOC	U.S.
+LOC	Gulf
+LOC	Mexico
+PER	Gustav
+LOC	New Orleans
+PER	Katrina
+LOC	New Orleans
+PER	Gustav
+LOC	Louisiana
+LOC	New Orleans
+PER	Katrina
+ORG	Times Picayune
+LOC	U.S.
+LOC	Atlantic
+PER	Hanna
+LOC	Bahamas
+LOC	U.S.
+MISC	East Coast
+LOC	Florida
+LOC	Carolinas
+PER	Ike
+PER	Josephine
+LOC	Caribbean
+ORG	Miami-based National Hurricane Center
+PER	Hanna
+LOC	Bahamas
+PER	Chris Baltimore
+PER	Bruce Nichols
+PER	Erwin Seba
+LOC	Houston
+PER	Kevin Krolicki
+PER	Mary Milliken
+PER	Philip Barbara
+PER	Bill Trott

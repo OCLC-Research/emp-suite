@@ -1,0 +1,3 @@
+label,frequency,precision,recall,fmeasure
+{% for tag in config['setup']['tags'] %}{{ tag }},{{ model['score']['frequency'][tag] }},{{ model['score']['tags'][tag]['precision'] }},{{ model['score']['tags'][tag]['recall'] }},{{ model['score']['tags'][tag]['fmeasure'] }}
+{% endfor %}

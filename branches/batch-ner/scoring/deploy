@@ -1,0 +1,83 @@
+#!/bin/bash
+# Begin deploy
+##############
+#$# creator : Devon Smith
+#%# email: smithde@oclc.org
+#$# created : 2010-06-14
+#$# title : deploy
+#$# description : Deploy data files into the scoring directory
+########## Define a usage function 
+function usage {
+    echo "Usage: $this"
+    if [ "$1" = "exit" ]; then exit; fi
+}
+########## Set to "false" to turn verbose off
+function echo_stdout { echo "$@"; }
+function echo_stderr { echo "$@" >& 2; }
+# Set verbose to 'echo_stderr' or 'echo_stdout' to see output trace info
+verbose=false
+$verbose Verbose output on ${verbose##*_}
+
+########## Setup some common paths
+# The absolute, canonical ( no ".." ) path to this script
+canonical=$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)/$(basename -- "$0")")
+# Just the filename of this script
+this=$(basename $canonical)
+$verbose This: $this
+# The directory this script is in
+here=$(dirname $canonical)
+$verbose Here: $here
+
+########## When the script is being executed
+today=$(date +%F)
+now=$(date +%H:%M:%S)
+$verbose Time: $today $now
+##########
+if [ "$1" = "-h" ]; then usage 'exit' ; fi
+##########
+
+# Add model names here.
+# Model names are the directories under tagging/ where a dataset was tagged.
+models=( )
+
+# Comment out the following line after adding model names above
+echo "This script has not been configured - please configure then execute." && exit
+
+moduledir=$here
+$verbose Module Dir: $moduledir
+
+rootdir=$(dirname $moduledir)
+$verbose Root Dir: $rootdir
+
+# Copy files from Source to Target
+# Files in source directory are copied from $source/$name.$ext to $target/$name/$prefix.txt
+function deploy() {
+	prefix=$1
+	source_dir=$2
+	target_dir=$3
+
+	for src in ${source_dir}/*     
+	do
+		file=${src##*/}
+		dir=${target_dir}/${file%.*}
+		mkdir -p $dir
+		$verbose Copy $src to $dir/${prefix}.txt
+		cp $src $dir/${prefix}.txt
+	done
+}
+
+# For each model used to tag the text, copy the tagged text to scoring dir
+for model in ${models[*]}
+do
+	deploy ${model} $rootdir/tagging/${model}/output $moduledir/data
+done
+
+# Copy original files to scoring dir
+deploy original $rootdir/original $moduledir/data
+
+# Copy gold data to scoring dir
+deploy gold $rootdir/gold-data $moduledir/data
+
+############
+# End deploy
+# vim:ts=4:indentexpr=

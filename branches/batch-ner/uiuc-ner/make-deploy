@@ -1,0 +1,83 @@
+#!/bin/bash
+# Begin make-deploy
+##############
+#$# creator : Devon Smith
+#%# email: smithde@oclc.org
+#$# created : 2010-06-18
+#$# title : make-deploy
+#$# description : Make & deploy JARs into working directory lib
+########## Define a usage function 
+function usage {
+    echo "Usage: $this"
+    if [ "$1" = "exit" ]; then exit; fi
+}
+########## Set to "false" to turn verbose off
+function echo_stdout { echo "$@"; }
+function echo_stderr { echo "$@" >& 2; }
+# Set verbose to 'echo_stderr' or 'echo_stdout' to see output trace info
+verbose=false
+$verbose Verbose output on ${verbose##*_}
+
+########## Setup some common paths
+# The absolute, canonical ( no ".." ) path to this script
+canonical=$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)/$(basename -- "$0")")
+# Just the filename of this script
+this=$(basename $canonical)
+$verbose This: $this
+# The directory this script is in
+here=$(dirname $canonical)
+$verbose Here: $here
+
+########## When the script is being executed
+today=$(date +%F)
+now=$(date +%H:%M:%S)
+$verbose Time: $today $now
+##########
+if [ "$1" = "-h" ]; then usage 'exit' ; fi
+##########
+
+lbjdir=LbjNerTagger1.11.release
+zipfile=LBJNERTagger1.2.zip
+libdir=$(dirname $here)/lib
+patchfile=LbjNerTagger-1.11_oclc.patch
+
+jarname=uiuc.ner.jar
+modeljar=uiuc.ner.model.jar
+
+if [ ! -f "$zipfile" ]
+then
+	echo "UIUC NER not found: '$zipfile'"
+	exit
+fi
+
+unzip $zipfile
+
+if [ ! -d "$lbjdir" ]
+then
+	echo "Couldn't find source directory: $lbjdir"
+	exit
+fi
+
+patch -b -p0 < $patchfile
+
+cd $lbjdir
+
+# Copy the LBJ jars into the emp-suite libdir
+cp LBJ2.jar $libdir; chmod 444 $libdir/LBJ2.jar
+cp LBJ2Library.jar $libdir; chmod 444 $libdir/LBJ2Library.jar
+
+# Create the UIUC NER model jar in the emp-suite libdir
+jar cf $libdir/$modeljar Config Data
+
+# Compile the the UIUC NER classes
+./cleanCompileProject
+
+cd bin
+# Create the UIUC NER jar in the emp-suite libdir
+jar cf $libdir/$jarname  *
+
+echo '... Done'
+
+############
+# End make-deploy
+# vim:ts=4:indentexpr=

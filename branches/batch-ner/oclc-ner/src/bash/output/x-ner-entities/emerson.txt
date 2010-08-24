@@ -1,0 +1,11 @@
+PER	Ralph Waldo Emerson
+MISC	American
+ORG	New Thought
+PER	Emerson
+LOC	Transcendentalism
+ORG	Nature
+MISC	American
+PER	Oliver Wendell Holmes
+LOC	America
+ORG	Intellectual Declaration of Independence
+PER	Emerson

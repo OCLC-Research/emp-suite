@@ -1,0 +1,46 @@
+setup:
+      # Verbose output, set to True to get more verbose output
+  verbose: False
+  # When comparing tagged text, should the comparison be done
+  # 1) 'space-insensitive' - with all space characters removed, or
+  # 2) 'exact' - exactly as it appears
+  compare: 'space-insensitive'
+  # The pattern that defines the beginning of a tag
+  # Default pattern is CONLL bracked format
+  pattern: '[${tag} '
+  # The list of tags used
+  tags:
+    - 'MISC'
+    - 'PER'
+    - 'LOC'
+    - 'ORG'
+html:
+  # Title to put in the report
+  title: Score Report Title
+  # Label to use for the gold data in the report
+  goldlabel: Gold
+gold:
+  label: Gold
+  # The prefix for gold files, as configured in deploy script
+  prefix: gold
+  # The tagging format of the gold files
+  parser: bracket
+# One entry under models: for each model to be scored
+models:
+  key: # Change the key for each entry
+    # Label to use for this model in the report
+    label: Some Label
+    # The prefix for files tagged by this model
+    prefix: mat
+    # The tagging format of the model ( bracket | clearforest )
+    parser: bracket
+    # Score and its sub-keys are place holders. They need to be here, just as they are
+    score:
+      corpora: {}
+      frequency: {}
+      summary: {}
+      tags: {}
+corpora:
+  - list of directories
+  - under data directory
+  - to be scored

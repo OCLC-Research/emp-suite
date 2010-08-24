@@ -1,0 +1,30 @@
+PER	Thomas Jefferson
+LOC	United States
+ORG	Declaration of Independence
+LOC	United States
+ORG	Louisiana Purchase
+PER	Lewis
+PER	Clark Expedition
+PER	Jefferson
+LOC	Britain
+LOC	France
+PER	Jefferson
+LOC	Virginia
+ORG	Religious Freedom
+MISC	Jeffersonian
+ORG	Democratic-Republican Party
+MISC	American
+PER	Jefferson
+LOC	Virginia
+LOC	United States
+PER	Jefferson
+ORG	University of Virginia
+PER	John F. Kennedy
+ORG	Nobel Prize
+LOC	White House
+LOC	White House
+PER	Thomas Jefferson
+PER	Jefferson
+ORG	Congress
+PER	Jefferson
+LOC	U.S.

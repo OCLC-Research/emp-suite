@@ -1,0 +1,138 @@
+MISC	World War II
+MISC	World War
+MISC	German
+LOC	Poland
+LOC	Germany
+LOC	United Kingdom
+LOC	France
+MISC	British
+PER	Marco Polo Bridge Incident
+MISC	Operation Barbarossa
+LOC	Pearl Harbour
+MISC	British
+LOC	Netherlands
+LOC	South East Asia
+LOC	Soviet Union
+LOC	United States
+MISC	Cold War
+ORG	United Nations
+LOC	Asia
+LOC	Africa
+LOC	Western Europe
+MISC	World War I
+LOC	Germany
+ORG	Treaty
+ORG	Versailles
+LOC	Germany
+MISC	German
+LOC	Russia
+LOC	Soviet Union
+PER	Joseph Stalin
+LOC	Italy
+PER	Benito Mussolini
+LOC	Roman Empire
+ORG	Kuomintang
+ORG	KMT
+LOC	China
+MISC	Chinese
+MISC	Japanese Empire
+LOC	China
+LOC	Asia
+MISC	Mukden Incident
+LOC	Manchuria
+PER	Tanggu Truce
+MISC	German
+MISC	Nuremberg Rally
+MISC	German
+MISC	Nuremberg Rally
+PER	Adolf Hitler
+LOC	Germany
+LOC	France
+LOC	United Kingdom
+LOC	Italy
+LOC	Germany
+MISC	French
+LOC	Italy
+LOC	Ethiopia
+LOC	Italy
+LOC	Saarland
+LOC	Germany
+PER	Hitler
+ORG	Treaty
+ORG	Versailles
+LOC	Germany
+LOC	United Kingdom
+LOC	France
+LOC	Italy
+ORG	Stresa Front
+LOC	Soviet Union
+LOC	Germany
+LOC	Europe
+LOC	France
+MISC	Franco-Soviet
+ORG	League of Nations
+LOC	United Kingdom
+LOC	Germany
+LOC	United States
+LOC	Europe
+LOC	Asia
+ORG	Neutrality Act
+LOC	Italy
+LOC	Ethiopia
+LOC	Germany
+MISC	European
+LOC	Italy
+LOC	Germany
+LOC	Austria
+ORG	Versailles
+LOC	Locarno
+PER	Hitler
+LOC	Rhineland
+MISC	European
+MISC	Spanish Civil War
+PER	Hitler
+PER	Mussolini
+PER	Francisco Franco
+MISC	Soviet-supported Spanish Republic
+LOC	Germany
+LOC	Italy
+MISC	Rome-Berlin
+LOC	Germany
+LOC	Japan
+LOC	Soviet Union
+MISC	Anti-Comintern
+LOC	Italy
+LOC	China
+ORG	Kuomintang
+LOC	Japan
+MISC	Japanese
+LOC	Manchuria
+MISC	Sino-Japanese War
+PER	A. J. P. Taylor
+MISC	Sino-Japanese War
+LOC	East Asia
+MISC	European War
+LOC	Europe
+MISC	World War
+MISC	European
+MISC	V-E Day
+ORG	Treaty
+LOC	Japan
+MISC	Marco Polo Bridge Incident
+LOC	Japan
+LOC	China
+MISC	Soviets
+LOC	China
+LOC	China
+LOC	Germany
+LOC	Shanghai
+MISC	Japanese
+MISC	Chinese
+LOC	Nanjing
+MISC	Chinese
+MISC	Japanese
+LOC	Yellow River
+LOC	Wuhan
+MISC	Japanese
+MISC	Soviet
+LOC	Lake Khasan
