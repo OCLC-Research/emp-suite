@@ -8,230 +8,233 @@ GPL v2 - see license.txt
 (Listed in order of suggested set up)
 
 emp-suite/
---------/lib
-        --------/ Description
-                --------/ Where dependency and deliverable JARs/libraries are put.
-        --------/ Requirements
-                --------/ wget 1.12 - http://www.gnu.org/software/wget/wget.html
-                --------/ unzip 6.0 - http://www.info-zip.org/
-                --------/ tar 1.23 - http://www.gnu.org/software/tar/tar.html
-                --------/ bash 4.1 - http://www.gnu.org/software/bash/bash.html
-        --------/ Usage
-                --------/ Execute the dl-deps script.
-                --------/ It will download certain project dependecies and deploy them into the lib directory.
-                        --------/ Restlet 1.0.11
-                        --------/ Simple Framework 3.1.3
+----/lib
+    ----/ Description
+        ----/ Where dependency and deliverable JARs/libraries are put.
+    ----/ Requirements
+        ----/ wget 1.12 - http://www.gnu.org/software/wget/wget.html
+        ----/ unzip 6.0 - http://www.info-zip.org/
+        ----/ tar 1.23 - http://www.gnu.org/software/tar/tar.html
+        ----/ bash 4.1 - http://www.gnu.org/software/bash/bash.html
+    ----/ Usage
+        ----/ Execute the dl-deps script.
+        ----/ It will download certain project dependecies and deploy them into the lib directory.
+            ----/ Restlet 1.0.11
+            ----/ Simple Framework 3.1.3
+            ----/ Freemarker Template Engine 2.3.19 - http://www.freemarker.org/
 
---------/gold-forge
-        --------/ Description
-                --------/ A web-app for tagging text in the CONLL bracketed format. 
-        --------/ Requirements
-                --------/ Perl 5.10 - http://www.perl.org/
-                --------/ Perl Template Toolkit 2.22 - http://search.cpan.org/dist/Template-Toolkit/
-                --------/ Perl Yaml 0.71 - http://search.cpan.org/dist/YAML/
-                --------/ Plack 0.9920 - http://search.cpan.org/dist/Plack/
-                --------/ Web browser
-                        --------/ Opera (best results) 10.10 - http://www.opera.com/
-                        --------/ Firefox 3.6.3 - http://www.mozilla.com/firefox/
-                        --------/ Internet Explorer 8 - http://www.microsoft.com/windows/internet-explorer/default.aspx
-        --------/ Configuration
-                --------/ Open app.yml, change the directory option under setup.
-                --------/ Point it to a directory on your system that contains files you want to tag.
-        --------/ Usage
-                --------/ To start the web-app, run 'plackup' in this directory
-                --------/ By default, it starts a server on port 5000, so point your browser to http://localhost:5000/
-                --------/ Select a file from the list displayed.
-                --------/ Select text in the file you want to tag. 
-                        --------/ In Opera, you can type 'p' to tag the selected text as PER, 'm' for MISC, 'o' for ORG, and 'l' for LOC
-                                --------/ Typing 'c' will clear the tagging for selected text. It's best to select text at word boundaries,
-                                --------/ and to select a few words on either side when clearing a tag.
-                        --------/ In other browsers (and Opera) click on the tag type in the legend to change the tag.
-                        --------/ You can delete selected text from the page by clicking on 'Delete' (pressing 'd' in Opera)
-                                --------/ This can be useful when another tagging tool adds space characters.
-                --------/ Clicking on 'As CONLL' will show the text as it looks in CONLL.
-                --------/ Clicking on 'As HTML' will show the color-ized version of the tagging.
-                --------/ To save the CONLL tagged version, click on 'As CONLL' and then manually copy and paste the text into a file.
-                --------/ If the data is created for scoring gold, the file should be moved to a sibling directory called 'gold-data.'
-                --------/ If the data is created for training gold, the file should be moved to a directory under the training module.
+----/gold-forge
+    ----/ Description
+        ----/ A web-app for tagging text in the CONLL bracketed format. 
+    ----/ Requirements
+        ----/ Perl 5.10 - http://www.perl.org/
+        ----/ Perl Template Toolkit 2.22 - http://search.cpan.org/dist/Template-Toolkit/
+        ----/ Perl Yaml 0.71 - http://search.cpan.org/dist/YAML/
+        ----/ Plack 0.9920 - http://search.cpan.org/dist/Plack/
+        ----/ Web browser
+            ----/ Opera (best results) 10.10 - http://www.opera.com/
+            ----/ Firefox 3.6.3 - http://www.mozilla.com/firefox/
+            ----/ Internet Explorer 8 - http://www.microsoft.com/windows/internet-explorer/default.aspx
+    ----/ Configuration
+        ----/ Open app.yml, change the directory option under setup.
+        ----/ Point it to a directory on your system that contains files you want to tag.
+    ----/ Usage
+        ----/ To start the web-app, run 'plackup' in this directory
+        ----/ By default, it starts a server on port 5000, so point your browser to http://localhost:5000/
+        ----/ Select a file from the list displayed.
+        ----/ Select text in the file you want to tag. 
+            ----/ In Opera, you can type 'p' to tag the selected text as PER, 'm' for MISC, 'o' for ORG, and 'l' for LOC
+                ----/ Typing 'c' will clear the tagging for selected text. It's best to select text at word boundaries,
+                ----/ and to select a few words on either side when clearing a tag.
+            ----/ In other browsers (and Opera) click on the tag type in the legend to change the tag.
+            ----/ You can delete selected text from the page by clicking on 'Delete' (pressing 'd' in Opera)
+                ----/ This can be useful when another tagging tool adds space characters.
+        ----/ Clicking on 'As CONLL' will show the text as it looks in CONLL.
+        ----/ Clicking on 'As HTML' will show the color-ized version of the tagging.
+        ----/ To save the CONLL tagged version, click on 'As CONLL' and then manually copy and paste the text into a file.
+        ----/ If the data is created for scoring gold, the file should be moved to a sibling directory called 'gold-data.'
+        ----/ If the data is created for training gold, the file should be moved to a directory under the training module.
 
---------/uiuc-ner
-        --------/ Description
-                --------/ Named Entity Recognizing library developed by UIUC's Cognitive Computation Group.
-                --------/ Must be manually downloaded and compiled.
-                --------/ http://l2r.cs.uiuc.edu/~cogcomp/asoftware.php?skey=FLBJNE
-        --------/ Requirements
-                --------/ Java 1.6 - http://java.sun.com/
-                --------/ Patch 2.6.1 - http://www.gnu.org/software/patch/patch.html
-                --------/ bash 4.1 - http://www.gnu.org/software/bash/bash.html
-        --------/ Compilation
-                --------/ Download the UIUC CCG Named Entity Tagger from http://l2r.cs.uiuc.edu/~cogcomp/asoftware.php?skey=FLBJNE
-                        --------/ ( As of 2010-06-18, the downloaded file is named LBJNERTagger1.2.zip, but actually contains version 1.11 )
-                --------/ Move the downloaded zip file into the uiuc-ner directory.
-                --------/ Execute the make-deploy script.
-                        --------/ This script will unzip the file, patch the source, compile the classes,
-                        --------/ then build and copy JAR files into the emp-suite/lib directory.
+----/uiuc-ner
+    ----/ Description
+        ----/ Named Entity Recognizing library developed by UIUC's Cognitive Computation Group.
+        ----/ Must be manually downloaded and compiled.
+        ----/ http://l2r.cs.uiuc.edu/~cogcomp/asoftware.php?skey=FLBJNE
+    ----/ Requirements
+        ----/ Java 1.6 - http://java.sun.com/
+        ----/ Patch 2.6.1 - http://www.gnu.org/software/patch/patch.html
+        ----/ bash 4.1 - http://www.gnu.org/software/bash/bash.html
+    ----/ Compilation
+        ----/ Download the UIUC CCG Named Entity Tagger from http://l2r.cs.uiuc.edu/~cogcomp/asoftware.php?skey=FLBJNE
+            ----/ ( As of 2010-06-18, the downloaded file is named LBJNERTagger1.2.zip, but actually contains version 1.11 )
+        ----/ Move the downloaded zip file into the uiuc-ner directory.
+        ----/ Execute the make-deploy script.
+            ----/ This script will unzip the file, patch the source, compile the classes,
+            ----/ then build and copy JAR files into the emp-suite/lib directory.
 
---------/oclc-ner
-        --------/ Description
-                --------/ A web service layer and a batch command line layer over the UIUC NER library.
-        --------/ Requirements
-                --------/ Java 1.6 - http://java.sun.com/
-                --------/ bash 4.1 - http://www.gnu.org/software/bash/bash.html
-                --------/ UIUC CCG Named Entity Tagger 1.11 - see uiuc-ner above
-                --------/ Restlet 1.0.11 - http://www.restlet.org/
-                        --------/ Deployed by the emp-suite/lib/dl-deps script.
-                --------/ Simple Framework 3.1.3 - http://www.simpleframework.org/
-                        --------/ Deployed by the emp-suite/lib/dl-deps script.
-        --------/ Compilation
-                --------/ Execute the make-deploy script.
-                        --------/ This script compiles the classes, builds a JAR, and copies it into the emp-suite/lib directory.
-        --------/ Usage
-                --------/ In src/bash there are a few demonstration scripts.
-                --------/ ner.server
-                        --------/ This script starts an NER web service. It can take several minutes to fully initialize.
-                        --------/ It puts log information into logs/gateman.log.
-                --------/ demo.client
-                        --------/ This script will connect to the server started above and get a sample text tagged.
-                        --------/ It prints some logging info and the final result to stdout.
-                --------/ tagger
-                        --------/ This script will tag files in batch on the local disk. It does not need the server above to be running.
-                        --------/ (It also can take several minutes to initialize before tagging starts.)
-                        --------/ It will tag the sample texts in the input subdirectory, putting the results in the output subdirectory.
-                        --------/ There are four output format options: text/x-ner-markup, text/x-ner-entities, text/html, and application/xml
-                        --------/ Under the output directory is a subdirectory for each format which provides examples. 
+----/oclc-ner
+    ----/ Description
+        ----/ A web service layer and a batch command line layer over the UIUC NER library.
+    ----/ Requirements
+        ----/ Java 1.6 - http://java.sun.com/
+        ----/ bash 4.1 - http://www.gnu.org/software/bash/bash.html
+        ----/ UIUC CCG Named Entity Tagger 1.11 - see uiuc-ner above
+        ----/ Restlet 1.0.11 - http://www.restlet.org/
+            ----/ Deployed by the emp-suite/lib/dl-deps script.
+        ----/ Simple Framework 3.1.3 - http://www.simpleframework.org/
+            ----/ Deployed by the emp-suite/lib/dl-deps script.
+        ----/ Freemarker Template Engine 2.3.19 - http://www.freemarker.org/
+            ----/ http://softlayer.dl.sourceforge.net/project/freemarker/freemarker/2.3.19/freemarker-2.3.19.tar.gz
+    ----/ Compilation
+        ----/ Execute the make-deploy script.
+            ----/ This script compiles the classes, builds a JAR, and copies it into the emp-suite/lib directory.
+    ----/ Usage
+        ----/ In src/bash there are a few demonstration scripts.
+        ----/ ner.server
+            ----/ This script starts an NER web service. It can take several minutes to fully initialize.
+            ----/ It puts log information into logs/gateman.log.
+        ----/ demo.client
+            ----/ This script will connect to the server started above and get a sample text tagged.
+            ----/ It prints some logging info and the final result to stdout.
+        ----/ tagger
+            ----/ This script will tag files in batch on the local disk. It does not need the server above to be running.
+            ----/ (It also can take several minutes to initialize before tagging starts.)
+            ----/ It will tag the sample texts in the input subdirectory, putting the results in the output subdirectory.
+            ----/ There are four output format options: text/x-ner-markup, text/x-ner-entities, text/html, and application/xml
+            ----/ Under the output directory is a subdirectory for each format which provides examples. 
 
---------/training
-        --------/ Description
-                --------/ Train custom Named Entity Recognition models.
-        --------/ Requirements
-                --------/ OCLC NER - see oclc-ner above
-                --------/ UIUC NER - see uiuc-ner above
-                --------/ Gold training data - see gold-forge above
-                --------/ Java 1.6 - http://java.sun.com/
-                --------/ bash 4.1 - http://www.gnu.org/software/bash/bash.html
-        --------/ Configuration
-                --------/ train
-                        --------/ training_gold=$here/data/sample-gold.conll
-                                --------/ Pointer to the training-gold data.
-                        --------/ properties_file=$here/config/sample.prop
-                                --------/ Pointer to the OCLC NER configuration file.
-                --------/ config/sample.prop
-                        --------/ This file configures the OCLC NER layer.
-                        --------/ uiuc.ner.parameter.forceSentenceOnLineBreak = false;
-                                --------/ Force a line break in the training-gold data to be interpreted as a new sentence.
-                                --------/ Depending on your training-gold data and the data on which you intend to use the model, this can
-                                --------/ result in subtle differences in your model's performance. It's best to experiment with each value.
-                        --------/ configLocation = config/sample.config
-                                --------/ Pointer to the UIUC NER configuration file.
-                --------/ config/sample.config
-                        --------/ This file configures the UIUC NER layer.
-                        --------/ model/sample-model
-                                --------/ Pointer to the model files. Model files are this value, suffixed with '.level1' and '.level2'
-                        --------/ rounds	3
-                                --------/ Number of training rounds to execute. As more training-gold is used and more rounds are done,
-                                --------/ the time it takes to train a model increase. 30 rounds and 500k of training data can take
-                                --------/ several hours, but produces good results. 3 is the default here just for the sample.
-        --------/ Usage
-                --------/ Make a copy of the "skeleton" directory for each model you want to train.
-                --------/ e.g., cp -r skeleton model.one
-                --------/ To build the sample model, just execute the 'train' script from the model.one directory.
-                --------/ To build your own model, copy your training-gold data into the model.one/data directory
-                --------/ and make sure all the configuration settings above are set accordingly. Then execute the 'train' script.
+----/training
+    ----/ Description
+        ----/ Train custom Named Entity Recognition models.
+    ----/ Requirements
+        ----/ OCLC NER - see oclc-ner above
+        ----/ UIUC NER - see uiuc-ner above
+        ----/ Gold training data - see gold-forge above
+        ----/ Java 1.6 - http://java.sun.com/
+        ----/ bash 4.1 - http://www.gnu.org/software/bash/bash.html
+    ----/ Configuration
+        ----/ train
+            ----/ training_gold=$here/data/sample-gold.conll
+                ----/ Pointer to the training-gold data.
+            ----/ properties_file=$here/config/sample.prop
+                ----/ Pointer to the OCLC NER configuration file.
+        ----/ config/sample.prop
+            ----/ This file configures the OCLC NER layer.
+            ----/ uiuc.ner.parameter.forceSentenceOnLineBreak = false;
+                ----/ Force a line break in the training-gold data to be interpreted as a new sentence.
+                ----/ Depending on your training-gold data and the data on which you intend to use the model, this can
+                ----/ result in subtle differences in your model's performance. It's best to experiment with each value.
+            ----/ configLocation = config/sample.config
+                ----/ Pointer to the UIUC NER configuration file.
+        ----/ config/sample.config
+            ----/ This file configures the UIUC NER layer.
+            ----/ model/sample-model
+                ----/ Pointer to the model files. Model files are this value, suffixed with '.level1' and '.level2'
+            ----/ rounds    3
+                ----/ Number of training rounds to execute. As more training-gold is used and more rounds are done,
+                ----/ the time it takes to train a model increase. 30 rounds and 500k of training data can take
+                ----/ several hours, but produces good results. 3 is the default here just for the sample.
+    ----/ Usage
+        ----/ Make a copy of the "skeleton" directory for each model you want to train.
+        ----/ e.g., cp -r skeleton model.one
+        ----/ To build the sample model, just execute the 'train' script from the model.one directory.
+        ----/ To build your own model, copy your training-gold data into the model.one/data directory
+        ----/ and make sure all the configuration settings above are set accordingly. Then execute the 'train' script.
 
---------/tagging
-        --------/ Description
-                --------/ Find and tag Named Entities.
-        --------/ Requirements
-                --------/ OCLC NER - see oclc-ner above
-                --------/ UIUC NER - see uiuc-ner above
-                --------/ Text to be tagged 
-                --------/ Java 1.6 - http://java.sun.com/
-                --------/ bash 4.1 - http://www.gnu.org/software/bash/bash.html
-        --------/ Configuration
-                --------/ tagger
-                        --------/ input_dir=input
-                                --------/ The directory with files to be tagged. All files in the directory will be processed,
-                                --------/ except hidden files and the 'tagger.prop' file.
-                        --------/ output_dir=output
-                                --------/ The directory where tagged files will be put, named identically to input files.
-                --------/ input/tagger.prop 
-                        --------/ configLocation = /Config/allFeaturesBigTrainingSet.config
-                                --------/ Pointer to a UIUC model configuration file.
-                        --------/ configLocationType = resource
-                                --------/ Is the configuration a resource (located in a JAR) or a file (located on disk).
-                        --------/ modelType = resource
-                                --------/ Is the model a resource (located in a JAR) or a file (located on disk).
-                        --------/ shapeClassifier = /Data/Models/shapeClassifier
-                                --------/ Pointer to the shape classifier for the model.
-                        --------/ shapeClassifierType = resource
-                                --------/ Is the shape classifier a resource (located in a JAR) or a file (located on disk).
-        --------/ Usage
-                --------/ Make a copy of the "skeleton" directory for each dataset you want to tag.
-                --------/ e.g., cp -r skeleton ner.dataset
-                --------/ Copy files-to-be-tagged into the the ner.dataset/input directory.
-                --------/ Edit the ner.dataset/input/tagger.prop file as needed.
-                        --------/ If you're using the default model distributed with the UIUC NER, then you need not make any changes.
-                --------/ Execute the ner.dataset/tagger script.
-                --------/ The output of the process will be in ner.dataset/output
+----/tagging
+    ----/ Description
+        ----/ Find and tag Named Entities.
+    ----/ Requirements
+        ----/ OCLC NER - see oclc-ner above
+        ----/ UIUC NER - see uiuc-ner above
+        ----/ Text to be tagged 
+        ----/ Java 1.6 - http://java.sun.com/
+        ----/ bash 4.1 - http://www.gnu.org/software/bash/bash.html
+    ----/ Configuration
+        ----/ tagger
+            ----/ input_dir=input
+                ----/ The directory with files to be tagged. All files in the directory will be processed,
+                ----/ except hidden files and the 'tagger.prop' file.
+            ----/ output_dir=output
+                ----/ The directory where tagged files will be put, named identically to input files.
+        ----/ input/tagger.prop 
+            ----/ configLocation = /Config/allFeaturesBigTrainingSet.config
+                ----/ Pointer to a UIUC model configuration file.
+            ----/ configLocationType = resource
+                ----/ Is the configuration a resource (located in a JAR) or a file (located on disk).
+            ----/ modelType = resource
+                ----/ Is the model a resource (located in a JAR) or a file (located on disk).
+            ----/ shapeClassifier = /Data/Models/shapeClassifier
+                ----/ Pointer to the shape classifier for the model.
+            ----/ shapeClassifierType = resource
+                ----/ Is the shape classifier a resource (located in a JAR) or a file (located on disk).
+    ----/ Usage
+        ----/ Make a copy of the "skeleton" directory for each dataset you want to tag.
+        ----/ e.g., cp -r skeleton ner.dataset
+        ----/ Copy files-to-be-tagged into the the ner.dataset/input directory.
+        ----/ Edit the ner.dataset/input/tagger.prop file as needed.
+            ----/ If you're using the default model distributed with the UIUC NER, then you need not make any changes.
+        ----/ Execute the ner.dataset/tagger script.
+        ----/ The output of the process will be in ner.dataset/output
 
---------/scoring
-        --------/ Description
-                --------/ Compare and score the text as tagged by an NER to Scoring-Gold.
-                --------/ A directory under scoring/data is created by the deploy for each file used for scoring, eg, scoring/data/my-file.
-                --------/ For each file, there must be 
-                        --------/ an original, untagged file
-                        --------/ a scoring gold file
-                        --------/ at least one model-tagged file
-        --------/ Requirements
-                --------/ Python 2.6.5 - http://www.python.org/
-                --------/ Python Yaml 3.09 - http://pyyaml.org
-                --------/ Jinja 2.5 - http://jinja.pocoo.org/2/
-                --------/ bash 4.1 - http://www.gnu.org/software/bash/bash.html
-                --------/ R 2.11 - http://www.r-project.org/
-                --------/ Original, untagged text
-                --------/ Gold tagged text
-                --------/ Model tagged text
-        --------/ Configuration
-                --------/ deploy
-                        --------/ Creates a directory under scoring/data for each file used to score models, eg, scoring/data/my-file.
-                        --------/ Copies required files (original, gold, model) into 
-                                --------/ Expects original files to be in directory called 'orginal' under the root of the repository.
-                                --------/ Expects gold files to be in directory called 'gold-data' under the root of the repository.
-                        --------/ models=()
-                                --------/ An array of model-directory names. These are the directories for the model tagged data
-                                --------/ and are located directly under the tagging module. Files will be copied
-                                --------/ from tagging/$model_prefix/output/$file.txt to scoring/data/$file/$model_prefix.txt
-                --------/ config.yml
-                        --------/ models:
-                                --------/ For each model being scored create a section under models
-                                --------/ sectionkey: a key used for the model being used, conventionally the same as prefix
-                                        --------/ label: A label for use in the Score Report
-                                        --------/ prefix: The model directory name - used to identify the model tagged file under scoring/data/$file
-                                                --------/ This should be one of the values on models=() from the deploy script.
-                        --------/ html:
-                                --------/ title: A title used in the Score Report
-                        --------/ corpora:
-                                --------/ A list of directories under score/data that should be used when scoring each model
-        --------/ Usage
-                --------/ Execute the deploy script
-                --------/ Execute the score.py script
-                --------/ Go to the ht/ directory and execute the serve script
-                        --------/ This script makes the score report web-accessable, ie, the contents of the ht directory.
-                        --------/ It prints a URL for accessing the report.
-                        --------/ Run the stop script when you're finished.
+----/scoring
+    ----/ Description
+        ----/ Compare and score the text as tagged by an NER to Scoring-Gold.
+        ----/ A directory under scoring/data is created by the deploy for each file used for scoring, eg, scoring/data/my-file.
+        ----/ For each file, there must be 
+                    ----/ an original, untagged file
+                    ----/ a scoring gold file
+                    ----/ at least one model-tagged file
+    ----/ Requirements
+        ----/ Python 2.6.5 - http://www.python.org/
+        ----/ Python Yaml 3.09 - http://pyyaml.org
+        ----/ Jinja 2.5 - http://jinja.pocoo.org/2/
+        ----/ bash 4.1 - http://www.gnu.org/software/bash/bash.html
+        ----/ R 2.11 - http://www.r-project.org/
+        ----/ Original, untagged text
+        ----/ Gold tagged text
+        ----/ Model tagged text
+    ----/ Configuration
+        ----/ deploy
+            ----/ Creates a directory under scoring/data for each file used to score models, eg, scoring/data/my-file.
+            ----/ Copies required files (original, gold, model) into 
+                ----/ Expects original files to be in directory called 'orginal' under the root of the repository.
+                ----/ Expects gold files to be in directory called 'gold-data' under the root of the repository.
+            ----/ models=()
+                ----/ An array of model-directory names. These are the directories for the model tagged data
+                ----/ and are located directly under the tagging module. Files will be copied
+                ----/ from tagging/$model_prefix/output/$file.txt to scoring/data/$file/$model_prefix.txt
+        ----/ config.yml
+            ----/ models:
+                ----/ For each model being scored create a section under models
+                ----/ sectionkey: a key used for the model being used, conventionally the same as prefix
+                    ----/ label: A label for use in the Score Report
+                    ----/ prefix: The model directory name - used to identify the model tagged file under scoring/data/$file
+                        ----/ This should be one of the values on models=() from the deploy script.
+            ----/ html:
+                ----/ title: A title used in the Score Report
+            ----/ corpora:
+                ----/ A list of directories under score/data that should be used when scoring each model
+    ----/ Usage
+        ----/ Execute the deploy script
+        ----/ Execute the score.py script
+        ----/ Go to the ht/ directory and execute the serve script
+            ----/ This script makes the score report web-accessable, ie, the contents of the ht directory.
+            ----/ It prints a URL for accessing the report.
+            ----/ Run the stop script when you're finished.
 
---------/util
-        --------/crop.pl
-                --------/ Usage: crop.pl input-file start-pattern end-pattern output-file
-                --------/ Description
-                        --------/ Extract a section of a file delimited by regular expressions.
-                        --------/ Extraction is done inclusive of the start- and end-pattern.
-        --------/strip_html_markup.pl
-                --------/ Usage: strip_html_markup.pl html-file text-file
-                --------/ Description
-                        --------/ Remove HTML tags from a file.
-        --------/strip_xml_markup.pl
-                --------/ Usage: strip_xml_markup.pl xml-file text-file [ --compress-whitespace ]
-                --------/ Description
-                        --------/ Remove XML tags from a file. If the '--compress-whitespace' option is supplied,
-                        --------/ contiguous whitespace in the resulting data will be compressed down to a single space.
+----/util
+    ----/crop.pl
+        ----/ Usage: crop.pl input-file start-pattern end-pattern output-file
+        ----/ Description
+            ----/ Extract a section of a file delimited by regular expressions.
+            ----/ Extraction is done inclusive of the start- and end-pattern.
+    ----/strip_html_markup.pl
+        ----/ Usage: strip_html_markup.pl html-file text-file
+        ----/ Description
+            ----/ Remove HTML tags from a file.
+    ----/strip_xml_markup.pl
+        ----/ Usage: strip_xml_markup.pl xml-file text-file [ --compress-whitespace ]
+        ----/ Description
+            ----/ Remove XML tags from a file. If the '--compress-whitespace' option is supplied,
+            ----/ contiguous whitespace in the resulting data will be compressed down to a single space.
