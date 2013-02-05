@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<batch xmlns="http://unresolvable.fu/named-entity-recognizer/oclc/research">
+<#list items as item><item id="${item.id}" format="${item.format}">${item.content?html}</item>
+</#list>
+</batch>

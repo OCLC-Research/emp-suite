@@ -1,0 +1,3 @@
+<@compress single_line=true><#list nodes as node>
+<#if node.type == 'text'>${node.content}<#else>[${node.type?upper_case} ${node.content}]</#if>
+</#list></@compress>

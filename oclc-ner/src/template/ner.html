@@ -1,0 +1,21 @@
+<html><head>
+<title>NER Tagged Text</title>
+<style type='text/css'>
+th{text-align:left;}span{font-weight:bold;}
+.per{color:red;}.loc{color:blue;}.org{color:green;}.misc{color:purple;}
+table#key{float:left;font-size:small;margin-right:5pt;margin-bottom:5pt;border-right:solid thin black;border-bottom:solid thin black;
+</style>
+</head>
+<body>
+<#if link??><p><a href="${link?html}">${link?html}</a></p></#if>
+<hr/><div id='content'>
+<table id='key'>
+<tr><th class='per'>Person</th></tr>
+<tr><th class='loc'>Location</th></tr>
+<tr><th class='org'>Organization</th></tr>
+<tr><th class='misc'>Misc</th></tr>
+</table>
+<@compress single_line=true><#list nodes as node><#if node.type == 'text'>${node.content?html}<#else><span class="${node.type}">${node.content?html}</span></#if></#list></@compress>
+</div>
+<hr/>
+</body></html>
