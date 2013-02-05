@@ -1,0 +1,3 @@
+<#list nodes as node>
+<#if node.type != 'text'>${node.type?upper_case}	${node.content}
+</#if></#list>

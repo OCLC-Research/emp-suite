@@ -1,0 +1,5 @@
+<ner:content xmlns:ner="uri:ns:ner">
+<@compress single_line=true><#list nodes as node>
+<#if node.type == 'text'>${node.content?xml}<#else><ner:${node.type}>${node.content?xml}</ner:${node.type}></#if>
+</#list></@compress>
+</ner:content>

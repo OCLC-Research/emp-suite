@@ -1,0 +1,3 @@
+<#list resources as url>
+${url?html}
+</#list>
