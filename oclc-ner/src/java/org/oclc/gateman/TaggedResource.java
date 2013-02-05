@@ -58,6 +58,7 @@ public class TaggedResource extends CommonResource {
 		logger.info("Variant: " + vmt.toString());
 		if ( !(vmt.equals(TEXT_NER)
 				|| vmt.equals(TEXT_NER_ENT)
+				|| vmt.equals(APP_NER_BATCH)
 				|| vmt.equals(MediaType.TEXT_HTML)
 				|| vmt.equals(MediaType.TEXT_PLAIN)
 				|| vmt.equals(MediaType.APPLICATION_XML))) {
