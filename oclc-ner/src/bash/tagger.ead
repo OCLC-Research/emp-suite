@@ -1,10 +1,10 @@
 #!/bin/bash
-# Begin tagger
+# Begin tagger.wip
 ##############
 #$# creator : Devon Smith
 #%# email: smithde@oclc.org
 #$# created : 2010-06-22
-#$# title : tagger
+#$# title : tagger.wip
 #$# description : Command line tagger demo 
 ########## Define a usage function 
 function usage {
@@ -18,7 +18,7 @@ function echo_stdout { echo "$@"; }
 function echo_stderr { echo "$@" >& 2; }
 # Set verbose to 'echo_stderr' or 'echo_stdout' to see output trace info
 verbose=false
-verbose=echo_stdout
+#verbose=echo_stdout
 $verbose Verbose output on ${verbose##*_}
 
 ########## Setup some common paths
@@ -65,12 +65,30 @@ $verbose Classpath: $CP
 CLASS=org.oclc.gateman.CmdLineTagger
 # Usage: org.oclc.gateman.CmdLineTagger -d input-dir output-dir [ format ]
 # Usage: org.oclc.gateman.CmdLineTagger -f batch-file output-file tagger-properties
+tagging_properties=/home/smithde/proj/ndiipp/emp-batch-ner/oclc-ner/src/bash/input/tagger.prop
 
-input_dir=input
-output_dir=output
+root=/home/smithde/proj/new-ead/data
 
-$JAVA -Xmx2000m -cp $CP $CLASS -d $input_dir $output_dir $format
+#for file in $(ls $root/extract/ead_{29,31}.xml)
+for file in $(ls $root/extract)
+do
+	#if [ "${file##*.}" != "txt" ] 
+	#then
+	#	continue
+	#fi
+	if [ "${file%%.*}" != "porter" ] 
+	then
+		continue
+	fi
+
+	file=${file##*/}
+
+	$verbose File: $file
+	input_file=$root/extract/$file
+	output_file=$root/ner/$file
+	$JAVA -Xmx2000m -cp $CP $CLASS -f $input_file $output_file $tagging_properties
+done
 
 ############
-# End tagger
+# End tagger.wip
 # vim:ts=4:indentexpr=

@@ -1,16 +1,14 @@
 #!/bin/bash
-# Begin tagger
+# Begin restlet.sh
 ##############
 #$# creator : Devon Smith
 #%# email: smithde@oclc.org
 #$# created : 2010-06-22
-#$# title : tagger
-#$# description : Command line tagger demo 
+#$# title : restlet.sh
+#$# description : Add Restlet jars to the classpath
 ########## Define a usage function 
 function usage {
-    echo "Usage: $this [ format ]"
-    echo -e "\t default format = text/x-ner-markup"
-    echo -e "\t valid format options = text/x-ner-entities, text/html, application/xml"
+    echo "Usage: $this <library directory>"
     if [ "$1" = "exit" ]; then exit; fi
 }
 ########## Set to "false" to turn verbose off
@@ -18,7 +16,6 @@ function echo_stdout { echo "$@"; }
 function echo_stderr { echo "$@" >& 2; }
 # Set verbose to 'echo_stderr' or 'echo_stdout' to see output trace info
 verbose=false
-verbose=echo_stdout
 $verbose Verbose output on ${verbose##*_}
 
 ########## Setup some common paths
@@ -38,39 +35,20 @@ $verbose Time: $today $now
 ##########
 if [ "$1" = "-h" ]; then usage 'exit' ; fi
 ##########
-JAVA=$(which java)
 
-format="text/x-ner-markup"
-if [ "$1" != "" ]
-then
-	format="$1"
-fi
-
-moduledir=$(dirname $(dirname $here))
-$verbose Module Dir: $moduledir
-
-libdir=$(dirname $moduledir)/lib
+libdir=$1
 $verbose Library Dir: $libdir
+if [ ! -d $libdir ]; then echo "Arg #1 (\"$libdir\") is not a directory - Restlet JARs not found'"; exit; fi
 
-for script in $(ls classpath.d/*)
-do
-	if [ -x $script ]
-	then
-		cp=$($script $libdir)
-		if [ "" == "$CP" ]; then CP=$cp; else CP=$CP:$cp; fi
-	fi
-done
+restlet_libdir=$libdir/restlet-1.0.11/lib
+$verbose Restlet Library Dir: $restlet_libdir
+restlet_jars=(org.restlet.jar com.noelios.restlet.jar com.noelios.restlet.ext.simple_3.1.jar)
+
+for jar in ${restlet_jars[*]}; do CP=${CP:+$CP:}$restlet_libdir/$jar; done
 $verbose Classpath: $CP
 
-CLASS=org.oclc.gateman.CmdLineTagger
-# Usage: org.oclc.gateman.CmdLineTagger -d input-dir output-dir [ format ]
-# Usage: org.oclc.gateman.CmdLineTagger -f batch-file output-file tagger-properties
-
-input_dir=input
-output_dir=output
-
-$JAVA -Xmx2000m -cp $CP $CLASS -d $input_dir $output_dir $format
+echo $CP
 
 ############
-# End tagger
+# End restlet.sh
 # vim:ts=4:indentexpr=
