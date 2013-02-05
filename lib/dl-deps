@@ -36,17 +36,23 @@ $verbose Time: $today $now
 if [ "$1" = "-h" ]; then usage 'exit' ; fi
 ##########
 
+########## Restlet Framework
 RESTLET_ZIP=restlet-1.0.11.zip
 RESTLET_URL=http://www.restlet.org/downloads/1.0/$RESTLET_ZIP
-
 wget $RESTLET_URL
 unzip $RESTLET_ZIP
 
+########## Simple Web Server
 SIMPLE_TGZ=simple-core-3.1.3.tar.gz
 SIMPLE_URL=http://downloads.sourceforge.net/project/simpleweb/simpleweb/3.1.3/$SIMPLE_TGZ
-
 wget $SIMPLE_URL
 tar zxf $SIMPLE_TGZ
+
+########## FreeMaker Template Engine
+FREEMARKER_TGZ=freemarker-2.3.19.tar.gz
+FREEMARKER_URL=http://downloads.sourceforge.net/project/freemarker/freemarker/2.3.19/$FREEMARKER_TGZ
+wget $FREEMARKER_URL
+tar zxf $FREEMARKER_TGZ
 
 ############
 # End dl-deps
