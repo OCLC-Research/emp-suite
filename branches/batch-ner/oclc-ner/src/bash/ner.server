@@ -15,7 +15,7 @@ function usage {
 function echo_stdout { echo "$@"; }
 function echo_stderr { echo "$@" >& 2; }
 # Set verbose to 'echo_stderr' or 'echo_stdout' to see output trace info
-verbose=false
+verbose=echo_stdout
 $verbose Verbose output on ${verbose##*_}
 
 ########## Setup some common paths
@@ -55,15 +55,21 @@ simple_libdir=$libdir/simple-core-3.1.3/jar
 $verbose Simple Core Library Dir: $simple_libdir
 simple_jars=(simple-core-3.1.3.jar)
 
+freemarker_libdir=$libdir/freemarker-2.3.19/lib
+$verbose FreeMarker Library Dir: $freemarker_libdir
+freemarker_jars=(freemarker.jar)
+
 if [ ! -d $libdir ]; then echo "EMP-Suite JARs not found: '$libdir'"; exit; fi
 if [ ! -d $restlet_libdir ]; then echo "Restlet JARs not found: '$restlet_libdir'"; exit; fi
 if [ ! -d $simple_libdir ]; then echo "Simple Core JARs not found: '$simple_libdir'"; exit; fi
+if [ ! -d $freemarker_libdir ]; then echo "FreeMaker JARs not found: '$freemarker_libdir'"; exit; fi
 
 DEST=$moduledir/target/classes
 CP=$DEST
 for jar in ${jars[*]}; do CP=${CP:+$CP:}$libdir/$jar; done
 for jar in ${restlet_jars[*]}; do CP=${CP:+$CP:}$restlet_libdir/$jar; done
 for jar in ${simple_jars[*]}; do CP=${CP:+$CP:}$simple_libdir/$jar; done
+for jar in ${freemarker_jars[*]}; do CP=${CP:+$CP:}$freemarker_libdir/$jar; done
 $verbose Classpath: $CP
 
 CLASS=org.oclc.gateman.GatemanServer

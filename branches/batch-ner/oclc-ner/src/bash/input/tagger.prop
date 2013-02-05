@@ -1,4 +1,7 @@
 
+
+oclc.ner.rootdir = .
+
 # Where is the tagger config file located?
 configLocation = /Config/allFeaturesBigTrainingSet.config
 # Is the tagger config file a resource in the jar? Or a regular file? ( resource | file )
