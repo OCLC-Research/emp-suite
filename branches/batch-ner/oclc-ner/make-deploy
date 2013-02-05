@@ -54,8 +54,13 @@ restlet_libdir=$libdir/restlet-1.0.11/lib
 $verbose Restlet Library Dir: $restlet_libdir
 restlet_jars=(org.restlet.jar com.noelios.restlet.jar)
 
+freemarker_libdir=$libdir/freemarker-2.3.19/lib
+$verbose FreeMarker Library Dir: $freemarker_libdir
+freemarker_jars=(freemarker.jar)
+
 if [ ! -d $libdir ]; then echo "EMP-Suite JARs not found: '$libdir'"; exit; fi
 if [ ! -d $restlet_libdir ]; then echo "Restlet JARs not found: '$restlet_libdir'"; exit; fi
+if [ ! -d $freemarker_libdir ]; then echo "FreeMarker JARs not found: '$freemarker_libdir'"; exit; fi
 
 DEST=$moduledir/target/classes
 mkdir -p $DEST
@@ -63,6 +68,7 @@ mkdir -p $DEST
 CP=$DEST
 for jar in ${jars[*]}; do CP=${CP:+$CP:}$libdir/$jar; done
 for jar in ${restlet_jars[*]}; do CP=${CP:+$CP:}$restlet_libdir/$jar; done
+for jar in ${freemarker_jars[*]}; do CP=${CP:+$CP:}$freemarker_libdir/$jar; done
 $verbose Classpath: $CP
 
 $JAVAC -cp $CP -d $DEST $here/src/java/org/oclc/gateman/logging/*.java
@@ -71,7 +77,7 @@ $JAVAC -cp $CP -d $DEST $here/src/java/org/oclc/gateman/ner/*.java
 $JAVAC -cp $CP -d $DEST $here/src/java/org/oclc/gateman/*.java
 
 mkdir -p $DEST/properties
-cp $here/src/config/cmdline.logging.properties $DEST/properties
+cp $here/src/config/*.properties $DEST/properties
 
 cd $DEST
 $JAR cf $libdir/$target_jar *
